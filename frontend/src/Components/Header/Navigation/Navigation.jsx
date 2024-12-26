@@ -30,7 +30,7 @@ const Navigation = (props) => {
                 <span className="icon1 mr-2">
                   <RiMenu2Fill />
                 </span>
-                <span className="text">All Categories</span>
+                <span className="text">Tất cả danh mục</span>
                 <span className="icon2 ml-2">
                   <FaAngleDown />
                 </span>

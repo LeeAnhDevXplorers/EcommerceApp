@@ -47,7 +47,7 @@ const CountryDrop = () => {
     <div>
       <Button className="countryDrop" onClick={() => setisOpenModal(true)}>
         <div className="info d-flex flex-column">
-          <span className="lable">Your Location</span>
+          <span className="lable">Quốc Gia</span>
           <span className="name">
             {context.selectedCountry !== ""
               ? context.selectedCountry.length > 10
@@ -66,8 +66,8 @@ const CountryDrop = () => {
         className="locationModal"
         TransitionComponent={Transition}
       >
-        <h3>Choose your Delyvery Location</h3>
-        <p>Enter your address and we will specify the offer for your area.</p>
+        <h3>Chọn quốc gia của bạn</h3>
+        <p>Tìm kiếm quốc gia của bạn chúng tôi sẽ chỉ định</p>
         <Button className="close_" onClick={() => setisOpenModal(false)}>
           <IoIosCloseCircleOutline />
         </Button>

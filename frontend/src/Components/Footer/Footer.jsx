@@ -17,25 +17,25 @@ const Footer = () => {
             <span>
               <LuShirt />
             </span>
-            <span className="ml-2">Everyday fresh products</span>
+            <span className="ml-2">Sản phẩm cập nhật hang ngày</span>
           </div>
           <div className="col d-flex align-items-center">
             <span>
               <TbTruckDelivery />
             </span>
-            <span className="ml-2">Free delivery for order over $70</span>
+            <span className="ml-2">Giao hàng mien phí cho đơn từ $70</span>
           </div>
           <div className="col d-flex align-items-center">
             <span>
               <CiDiscount1 />
             </span>
-            <span className="ml-2">Daily Mega Discounts</span>
+            <span className="ml-2">Ưu đãi giảm giá hằng ngày</span>
           </div>
           <div className="col d-flex align-items-center">
             <span>
               <CiBadgeDollar />
             </span>
-            <span className="ml-2">Best price on the market</span>
+            <span className="ml-2">Giá tốt nhất trên thị trường</span>
           </div>
         </div>
 

@@ -12,7 +12,7 @@ const HomeCat = ({catData}) => {
   return (
     <section className="homeCat">
       <div className="container">
-        <h3 className="hd mb-4">Fetured Products</h3>
+        <h3 className="hd mb-4">Danh mục nổi bật</h3>
         <Swiper
           slidesPerView={10}
           spaceBetween={8}

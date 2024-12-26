@@ -164,9 +164,9 @@ const Cart = () => {
             </div>
             <div className="col-md-3">
               <div className="card border p-3 cartDetails">
-                <h4>CART TOTALS</h4>
+                <h4>Tổng giỏ hàng</h4>
                 <div className="d-flex align-items-center mb-3">
-                  <span>Subtotal</span>
+                  <span>Tổng phụ</span>
                   <span className="ml-auto text-red font-weight-bold">
                     $
                     {cartData
@@ -175,19 +175,19 @@ const Cart = () => {
                   </span>
                 </div>
                 <div className="d-flex align-items-center mb-3">
-                  <span>Shipping</span>
+                  <span>Phí vận chuyển</span>
                   <span className="ml-auto">
-                    <b>Free</b>
+                    <b>Miễn phí</b>
                   </span>
                 </div>
                 <div className="d-flex align-items-center mb-3">
-                  <span>Estimate for</span>
+                  <span>Quốc gia</span>
                   <span className="ml-auto">
                     <b>Viet Nam</b>
                   </span>
                 </div>
                 <div className="d-flex align-items-center mb-3">
-                  <span>Total</span>
+                  <span>Tổng cộng</span>
                   <span className="ml-auto text-red font-weight-bold">
                     $
                     {cartData

@@ -80,7 +80,7 @@ const Login = () => {
     <>
       <div className="container1">
         <div className="row">
-          <div className="col-lg-6 col-md-6 d-none d-md-block infinity-image-container"></div>
+          <div className="col-lg-6 col-md-6 d-none d-md-block infinity-image-container text-center text-white">Chào mưng bạn quay lại</div>
 
           <div className="col-lg-6 col-md-6 infinity-form-container">
             <div className="col-lg-9 col-md-12 col-sm-8 col-xs-12 infinity-form">
@@ -117,22 +117,6 @@ const Login = () => {
                     onChange={onchangeInput}
                   />
                 </div>
-                {/* <div class="row mb-3">
-                  <div class="col-auto d-flex align-items-center">
-                    <div class="custom-control custom-checkbox">
-                      <FormControlLabel
-                        sx={{ color: '#fff', fontSize: '1.6rem' }}
-                        control={
-                          <Checkbox
-                            defaultChecked
-                            sx={{ fontSize: '1.6rem' }}
-                          />
-                        }
-                        label="Remember me"
-                      />
-                    </div>
-                  </div>
-                </div> */}
 
                 <div className="mb-3">
                   <button type="submit" className="btn btn-block">

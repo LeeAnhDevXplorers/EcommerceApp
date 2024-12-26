@@ -50,7 +50,7 @@ const ProductModal = (props) => {
         <h4 className="mb-1 font-weight pr-5">{props?.data?.name}</h4>
         <div className="d-flex align-items-center">
           <div className="d-flex align-items-center mr-4">
-            <span>Brands: {props?.data?.brand}</span>
+            <span>Kho hàng: {props?.data?.brand}</span>
           </div>
           <Rating
             name="read-only"
@@ -91,16 +91,7 @@ const ProductModal = (props) => {
                 </Button>
               </div>
             </div>
-            <div className="d-flex align-items-center mt-5 actions">
-              <Button className="btn-round btn-sml" variant="outlined">
-                <IoIosHeartEmpty />
-                &nbsp; ADD TO WISHLIST
-              </Button>
-              <Button className="btn-round btn-sml ml-4" variant="outlined">
-                <MdCompareArrows />
-                &nbsp; Compare
-              </Button>
-            </div>
+            
           </div>
         </div>
       </Dialog>

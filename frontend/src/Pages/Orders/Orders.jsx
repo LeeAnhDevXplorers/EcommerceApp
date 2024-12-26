@@ -56,7 +56,7 @@ const Orders = () => {
     <>
       <section className="section">
         <div className="container">
-          <h2 className="hd">Orders</h2>
+          <h2 className="hd">Đơn hàng</h2>
           <div className="table-responsive order-table">
             <table className="table table-striped table-bordered">
               <thead>
@@ -82,7 +82,7 @@ const Orders = () => {
                     <td>{item?.paymentId}</td>
                     <td>
                       <span onClick={() => showProductOrder(item?._id)}>
-                        Click here to view
+                        Nhấp vào đây để xem
                       </span>
                     </td>
                     <td>{item?.name}</td>

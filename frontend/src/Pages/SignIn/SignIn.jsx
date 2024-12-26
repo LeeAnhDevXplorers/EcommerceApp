@@ -101,11 +101,9 @@ const signInGoogle = () => {
     setLoading(true);
 
     try {
-      // Gửi yêu cầu đăng nhập
       const response = await postData("/api/user/signin", formFields);
 
       if (response.status) {
-        // Lưu token và thông tin người dùng vào localStorage
         localStorage.setItem("token", response.token);
 
         const user = {
@@ -114,20 +112,15 @@ const signInGoogle = () => {
           userId: response.user?._id || "",
         };
         localStorage.setItem("user", JSON.stringify(user));
-
-        // Hiển thị thông báo thành công
         context.setAlertBox({
           open: true,
           error: false,
           msg: response.msg || "Đăng nhập thành công.",
         });
-
-        // Điều hướng sau khi hiển thị thông báo
         setTimeout(() => {
           window.location.href = "/";
         }, 1000);
       } else {
-        // Xử lý khi đăng nhập thất bại
         context.setAlertBox({
           open: true,
           error: true,
@@ -135,7 +128,6 @@ const signInGoogle = () => {
         });
       }
     } catch (error) {
-      // Xử lý lỗi trong quá trình gửi yêu cầu
       console.error("Lỗi đăng nhập:", error);
 
       context.setAlertBox({
@@ -170,7 +162,7 @@ const signInGoogle = () => {
             <div className="text-center">
               <img src={assets.logo} alt="" />
             </div>
-            <h2 className="mb-4">Sign In</h2>
+            <h2 className="mb-4">Đăng nhập</h2>
             <form action="" className="mt-3" onSubmit={signIn}>
               <div className="form-group">
                 <TextField
@@ -187,7 +179,7 @@ const signInGoogle = () => {
               <div className="form-group mb-4">
                 <TextField
                   id="standard-basic"
-                  label="Password"
+                  label="Mật khẩu"
                   type="password"
                   variant="standard"
                   required
@@ -196,13 +188,13 @@ const signInGoogle = () => {
                   onChange={onchangeInput}
                 />
               </div>
-              <a className="border-effect cursor">Forgot password? </a>
+              <a className="border-effect cursor">Quên mật khẩu? </a>
               <div className="d-flex align-items-center mt-3 mb-3 row">
                 <Button
                   type="submit"
                   className="btn col btn-blue btn-lg btn-big"
                 >
-                  Sign In
+                 Đăng nhập
                 </Button>
                 <Link to={"/"}>
                   <Button
@@ -210,18 +202,18 @@ const signInGoogle = () => {
                     variant="outlined"
                     onClick={() => context.setisHeaderFooterShow(true)}
                   >
-                    Cancel
+                    Đóng
                   </Button>
                 </Link>
               </div>
               <p>
-                Not Registered?
+                Bạn chưa có tài khoản?
                 <Link className="border-effect cursor" to={"/signUp"}>
-                  Sign Up
+                  Đăng ký
                 </Link>
               </p>
               <h4 className="social  text-center font-weight-bold mt-5">
-                Or continue with social account
+               Hoặc tiếp tục với tài khoản xã hội
               </h4>
               <div className="form-btn">
                 <Button className="logoBtn" onClick={signInGoogle}>

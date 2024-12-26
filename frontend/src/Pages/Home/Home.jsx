@@ -122,9 +122,9 @@ const Home = () => {
             <div className="col-md-9 homeProductRow">
               <div className="d-flex align-items-center">
                 <div className="info w-75">
-                  <h3 className="mb-0 hd">Popular Products</h3>
+                  <h3 className="mb-0 hd">Sản phẩm phổ biến</h3>
                   <p className="text-light text-sml mb-0">
-                    Do not miss the current offers until the end of March.
+                    Đừng bỏ lỡ các ưu đãi hiện tại cho đến cuối tháng 3.
                   </p>
                 </div>
                 <div className="ml-auto">
@@ -150,7 +150,7 @@ const Home = () => {
               </div>
               <div className="product-row mt-4 w-100">
                 {filterData?.length === 0 ? (
-                  <p>No products available in this category.</p>
+                  <p>Không có sản phẩm nào có sẵn trong danh mục này.</p>
                 ) : (
                   <Swiper
                     slidesPerView={4}
@@ -173,13 +173,13 @@ const Home = () => {
 
               <div className="d-flex align-items-center mt-5">
                 <div className="info w-75">
-                  <h3 className="mb-0 hd">NEW PRODUCTS</h3>
+                  <h3 className="mb-0 hd">SẢN PHẨM MỚI</h3>
                   <p className="text-light text-sml mb-0">
-                    New products with updated stocks.
+                    Sản phẩm mới với số lượng hàng cập nhật.
                   </p>
                 </div>
                 <Button className="viewAllBtn ml-auto">
-                  View All <FaArrowRight />
+                  Xem tất cả <FaArrowRight />
                 </Button>
               </div>
               <div className="product-row productRow2 mt-4 w-100 d-flex">
@@ -201,13 +201,13 @@ const Home = () => {
           <div className="homeProductRow mt-3">
             <div className="d-flex align-items-center">
               <div className="info w-75">
-                <h3 className="mb-0 hd mt-4">BEST SELLERS</h3>
+                <h3 className="mb-0 hd mt-4">BÁN CHẠY NHẤT</h3>
                 <p className="text-light text-sml mb-0">
-                  Do not miss the current offers until the end of March.
+                  Đừng bỏ lỡ các ưu đãi hiện tại cho đến cuối tháng 3.
                 </p>
               </div>
               <Button className="viewAllBtn ml-auto">
-                View All <FaArrowRight />
+                Xem tất cả <FaArrowRight />
               </Button>
             </div>
             <div className="product-row mt-4 w-100">
@@ -239,18 +239,20 @@ const Home = () => {
           <div className="row">
             <div className="col-md-6">
               <p className="text-white mb-1">
-                $20 discount for your first order
+                Giảm giá 20$ cho đơn hàng đầu tiên của bạn
               </p>
-              <h3 className="text-white">Join our newsletter and get...</h3>
+              <h3 className="text-white">
+                Tham gia bản tin của chúng tôi và nhận...
+              </h3>
               <p className="text-light">
-                Join our email subscription <br /> now to get updates on
-                promotions and coupons.
+                Tham gia đăng ký email của chúng tôi <br /> ngay để nhận thông
+                tin cập nhật về chương trình khuyến mãi và phiếu giảm giá.
               </p>
 
               <form>
                 <IoMailOutline />
-                <input type="text" placeholder="Your Email Address" />
-                <Button>Subscribe</Button>
+                <input type="text" placeholder="Địa chỉ Email của bạn" />
+                <Button>Đặt mua</Button>
               </form>
             </div>
             <div className="col-md-6">

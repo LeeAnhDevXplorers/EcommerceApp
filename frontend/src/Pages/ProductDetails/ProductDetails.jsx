@@ -164,7 +164,7 @@ const ProductDetails = (props) => {
                 <li className="list-inline-item">
                   <div className="d-flex align-items-center">
                     <span className="text-light mr-2">
-                      Brands: <b>{productData?.brand}</b>
+                      Kho hàng: <b>{productData?.brand}</b>
                     </span>
                   </div>
                 </li>
@@ -176,7 +176,7 @@ const ProductDetails = (props) => {
                       readOnly
                       size="small"
                     />
-                    <span className="text-light cursor ml-2">{reviewData?.length} Review</span>
+                    <span className="text-light cursor ml-2">{reviewData?.length} Đánh giá</span>
                   </div>
                 </li>
               </ul>
@@ -186,7 +186,7 @@ const ProductDetails = (props) => {
                   ${productData?.price}
                 </span>
               </div>
-              <div className="badge badge-success">IN STOCK</div>
+              <div className="badge badge-success">CÓ SẴN</div>
               <p className="mt-3">{productData?.description}</p>
               {(productData?.ramName?.length > 0 ||
                 productData?.weightName?.length > 0 ||
@@ -309,16 +309,6 @@ const ProductDetails = (props) => {
                     Đánh giá
                   </Button>
                 </li>
-                <li className="list-inline-item">
-                  <Button
-                    className={`${activeTabs === 3 && 'active'}`}
-                    onClick={() => {
-                      setActiveTabs(3);
-                    }}
-                  >
-                    Description
-                  </Button>
-                </li>
               </ul>
               {activeTabs === 0 && (
                 <div className="tabContent">
@@ -422,17 +412,6 @@ const ProductDetails = (props) => {
                           ></textarea>
                         </div>
                         <div className="row">
-                          {/* <div className="col-md-6">
-                            <div className="form-group">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Nhập tên của bạn"
-                                name="customerName"
-                                onChange={onChangeInput}
-                              />
-                            </div>
-                          </div> */}
                           <div className="col-md-6">
                             <div className="form-group">
                               <Rating

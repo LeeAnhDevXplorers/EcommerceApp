@@ -131,7 +131,7 @@ const Checkout = () => {
           <form action="" className="checkout-form" onSubmit={checkout}>
             <div className="row">
               <div className="col-md-8">
-                <h2 className="hd">Billing Details</h2>
+                <h2 className="hd">Thông tin thanh toán</h2>
                 <div className="row mt-3">
                   <div className="col-md-6">
                     <div className="form-group">
@@ -141,7 +141,7 @@ const Checkout = () => {
                           shrink
                           htmlFor="bootstrap-input"
                         >
-                          Full Name *
+                          Họ tên đầy đủ *
                         </InputLabel>
                         <BootstrapInput
                           id="bootstrap-input"
@@ -207,36 +207,6 @@ const Checkout = () => {
                     </div>
                   </div>
                 </div>
-                {/* <h5>Coutry</h5>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="form-group">
-                      <FormControl variant="standard" fullWidth>
-                        <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
-                          htmlFor="demo-customized-select-native"
-                        >
-                          Country
-                        </InputLabel>
-                        <NativeSelect
-                          sx={{ width: '100%' }}
-                          value={country}
-                          onChange={handleChange}
-                          input={<BootstrapInput placeholder="Country" />}
-                        >
-                          <option aria-label="None" value="" />
-                          {context.countryList?.map((item, index) => {
-                            return (
-                              <option value={item.country} key={index}>
-                                {item.country}
-                              </option>
-                            );
-                          })}
-                        </NativeSelect>
-                      </FormControl>
-                    </div>
-                  </div>
-                </div> */}
                 <h5>Địa chỉ cụ thể</h5>
                 <div className="row">
                   <div className="col-md-12">
@@ -288,7 +258,7 @@ const Checkout = () => {
                           shrink
                           htmlFor="bootstrap-input"
                         >
-                          Phone
+                          Số điện thoại
                         </InputLabel>
                         <BootstrapInput
                           id="bootstrap-input"
@@ -320,12 +290,12 @@ const Checkout = () => {
               </div>
               <div className="col-md-4">
                 <div className="card orderInfo">
-                  <h6 className="hd">Your Order</h6>
+                  <h6 className="hd">Đặt hàng cuaủa bạn</h6>
                   <table className="table table-borderless">
                     <thead>
                       <tr>
-                        <th>Product</th>
-                        <th>Subtotal</th>
+                        <th>Sản phẩm</th>
+                        <th>Tổng tiền</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -343,7 +313,7 @@ const Checkout = () => {
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>SubTotal</th>
+                        <th>Tổng tiền</th>
                         {/* Tổng tất cả giá trị trong cart */}
                         <th>
                           {cartData?.reduce(

@@ -58,7 +58,7 @@ const Header = () => {
                   {context.isLogin !== true ? (
                     <Link to={'/SignIn'}>
                       <Button className="btn-blue btnlg btn-big btn-round mr-4">
-                        Sign In
+                        Đăng nhập
                       </Button>
                     </Link>
                   ) : (
@@ -115,7 +115,7 @@ const Header = () => {
                           onClick={handleClose}
                           sx={{ fontSize: '1.6rem' }}
                         >
-                          <Avatar /> My account
+                          <Avatar /> Tài khoản
                         </MenuItem>
                         </Link>
                         <Divider />
@@ -124,20 +124,14 @@ const Header = () => {
                             <ListItemIcon>
                               <FactCheckIcon fontSize="large" />
                             </ListItemIcon>
-                            Orders
+                            Đơn hàng
                           </MenuItem>
                         </Link>
-                        <MenuItem onClick={handleClose}>
-                          <ListItemIcon>
-                            <FavoriteIcon fontSize="large" />
-                          </ListItemIcon>
-                          My List
-                        </MenuItem>
                         <MenuItem onClick={logout}>
                           <ListItemIcon>
                             <Logout fontSize="large" />
                           </ListItemIcon>
-                          Logout
+                          Đăng xuất
                         </MenuItem>
                       </Menu>
                     </>

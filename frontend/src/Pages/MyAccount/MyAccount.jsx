@@ -156,7 +156,7 @@ const MyAccount = (props) => {
                             htmlFor="bootstrap-input"
                             className="w-100"
                           >
-                            Name
+                            Họ tên của bạn
                           </InputLabel>
                           <BootstrapInput
                             className="w-100"
@@ -175,7 +175,7 @@ const MyAccount = (props) => {
                             shrink
                             htmlFor="bootstrap-input"
                           >
-                            Phone
+                            Số điện thoại
                           </InputLabel>
                           <BootstrapInput
                             id="bootstrap-input"
@@ -206,7 +206,7 @@ const MyAccount = (props) => {
                   </div>
                   <div className="form-group">
                     <Button variant="outlined" type="submit">
-                      Save
+                      Lưu
                     </Button>
                   </div>
                 </div>

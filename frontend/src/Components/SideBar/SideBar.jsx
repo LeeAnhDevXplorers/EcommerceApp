@@ -70,32 +70,16 @@ const SideBar = (props) => {
           />
           <div className="d-flex pt-2 pb-2 priceRange">
             <span>
-              From: <strong className="text-dark">Rs: {value[0]}</strong>
+              Từ: <strong className="text-dark">Rs: {value[0]}</strong>
             </span>
             <span className="ml-auto">
-              To: <strong className="text-dark">Rs: {value[1]}</strong>
+              Đến: <strong className="text-dark">Rs: {value[1]}</strong>
             </span>
           </div>
         </div>
         <div className="filterBox">
           <h6>Lọc theo đánh giá</h6>
           <div className="scroll">
-            {/* <ul>
-            <li>
-              <FormControlLabel
-                className="w-100"
-                control={<Checkbox />}
-                label="In Stock"
-              />
-            </li>
-            <li>
-              <FormControlLabel
-                className="w-100"
-                control={<Checkbox />}
-                label="On Sale"
-              />
-            </li>
-          </ul> */}
             <ul>
               <li onClick={() => filterByRating(5)}>
                 <Rating name="read-only" value={5} size="small" />
@@ -119,7 +103,7 @@ const SideBar = (props) => {
           </div>
         </div>
 
-        <div className="filterBox">
+        {/* <div className="filterBox">
           <h6>THƯƠNG HIỆU</h6>
           <div className="scroll">
             <ul>
@@ -160,7 +144,7 @@ const SideBar = (props) => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
         <Link to="#">
           <img className="w-100" src={assets.sidebar_banner} alt="" />
         </Link>

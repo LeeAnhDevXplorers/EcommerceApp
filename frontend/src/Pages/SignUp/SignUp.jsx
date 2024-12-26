@@ -42,7 +42,7 @@ const SignUp = () => {
       context.setAlertBox({
         open: true,
         error: true,
-        msg: 'Không được để trống các trường!',
+        msg: 'Không được để trống các trường khon!',
       });
       return;
     }
@@ -103,14 +103,14 @@ const SignUp = () => {
             <div className="text-center">
               <img src={assets.logo} alt="" />
             </div>
-            <h2 className="mb-4">Sign Up</h2>
+            <h2 className="mb-4">Đăng ký</h2>
             <form action="" className="mt-3" onSubmit={signUp}>
               <div className="row">
                 <div className="col-md-6">
                   <div className="form-group">
                     <TextField
                       id="standard-basic"
-                      label="Name"
+                      label="Tên đăng nhập"
                       type="text"
                       name="name"
                       variant="standard"
@@ -124,7 +124,7 @@ const SignUp = () => {
                   <div className="form-group">
                     <TextField
                       id="standard-basic"
-                      label="Phone No."
+                      label="Số điện thoại."
                       name="phone"
                       type="text"
                       variant="standard"
@@ -150,7 +150,7 @@ const SignUp = () => {
               <div className="form-group mb-4">
                 <TextField
                   id="standard-basic"
-                  label="Password"
+                  label="Mật khẩu"
                   type="password"
                   name="password"
                   onChange={onchangeInput}
@@ -159,23 +159,12 @@ const SignUp = () => {
                   className="w-100"
                 />
               </div>
-              {/* <div className="form-group mb-4">
-                <TextField
-                  id="standard-basic"
-                  label="Repeat your password"
-                  type="password"
-                  variant="standard"
-                  required
-                  className="w-100"
-                />
-              </div> */}
-              {/* <a className="border-effect cursor">Forgot password? </a> */}
               <div className="d-flex align-items-center mt-3 mb-3 row">
                 <Button
                   type="submit"
                   className="btn col btn-blue btn-lg btn-big"
                 >
-                  Sign Up
+                  Đăng ký
                 </Button>
                 <Link to={'/'}>
                   <Button
@@ -183,19 +172,19 @@ const SignUp = () => {
                     variant="outlined"
                     onClick={() => context.setisHeaderFooterShow(true)}
                   >
-                    Cancel
+                    Đóng
                   </Button>
                 </Link>
               </div>
 
               <p>
-                Already registered?
+               Bạn đã có tài khoản?
                 <Link className="border-effect cursor" to={'/signIn'}>
-                  LogIn
+                  Đăng nhập
                 </Link>
               </p>
               <h4 className="social  text-center font-weight-bold mt-5">
-                Or continue with social account
+               Hoặc tiếp tục với tài khoản xã hội
               </h4>
               <div className="form-btn">
                 <Button className="logoBtn">
