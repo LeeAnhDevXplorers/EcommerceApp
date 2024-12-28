@@ -73,27 +73,27 @@ const ProductDetails = () => {
     <>
       <div className="right-content w-100">
         <div className="card shadow border-0 w-100 flex-row p-4">
-          <h5 className="mb-0">Product View</h5>
+          <h5 className="mb-0">Xem Sản Phẩm</h5>
           <Breadcrumbs aria-label="breadcrumb" className="ml-auto breadcrumbs_">
             <StyleBreadcrumb
               component="a"
               href="/"
-              label="Dashboard"
+              label="Bảng Điều Khiển"
               icon={<HomeIcon fontSize="small" />}
             />
             <StyleBreadcrumb
               href="#"
-              label="Products"
+              label="Sản Phẩm"
               deleteIcon={<ExpandMoreIcon />}
             />
-            <StyleBreadcrumb label="Products View" />
+            <StyleBreadcrumb label="Xem Sản Phẩm" />
           </Breadcrumbs>
         </div>
         <div className="card w-100 productDetailsSection">
           <div className="row">
             <div className="col-md-5">
               <div className="sliderWrapper pt-3 pb-3 pl-4 pr-4">
-                <h6 className="mb-3">Product Gallery</h6>
+                <h6 className="mb-3">Thư Viện Sản Phẩm</h6>
                 <Swiper
                   slidesPerView={1}
                   spaceBetween={0}
@@ -142,7 +142,7 @@ const ProductDetails = () => {
             </div>
             <div className="col-md-7">
               <div className="productWrapper pt-3 pb-3 pl-4 pr-4">
-                <h6 className="mb-3 ml-0">Product Details</h6>
+                <h6 className="mb-3 ml-0">Chi Tiết Sản Phẩm</h6>
                 <h4 className="mb-3">{productData?.name}</h4>
                 <div className="productInfo">
                   <div className="row">
@@ -150,7 +150,7 @@ const ProductDetails = () => {
                       <span className="icon">
                         <FaStore />
                       </span>
-                      <span className="name">Brand</span>
+                      <span className="name">Thương Hiệu</span>
                     </div>
                     <div className="col-sm-9">
                       : <span>{productData?.brand}</span>
@@ -161,7 +161,7 @@ const ProductDetails = () => {
                       <span className="icon">
                         <BiCategoryAlt />
                       </span>
-                      <span className="name">Category</span>
+                      <span className="name">Danh Mục</span>
                     </div>
                     <div className="col-sm-9">
                       : <span>{productData?.catName}</span>
@@ -177,7 +177,7 @@ const ProductDetails = () => {
                             <span className="icon">
                               <BsFileEarmarkRuledFill />
                             </span>
-                            <span className="name">Size</span>
+                            <span className="name">Kích Thước</span>
                           </div>
                           <div className="col-sm-9">
                             :
@@ -202,7 +202,7 @@ const ProductDetails = () => {
                             <span className="icon">
                               <BsFileEarmarkRuledFill />
                             </span>
-                            <span className="name">Weight</span>
+                            <span className="name">Trọng Lượng</span>
                           </div>
                           <div className="col-sm-9">
                             :
@@ -247,7 +247,7 @@ const ProductDetails = () => {
                       <span className="icon">
                         <ImPriceTags />
                       </span>
-                      <span className="name">OLD Price</span>
+                      <span className="name">Giá Cũ</span>
                     </div>
                     <div className="col-sm-9">
                       : <span>{productData?.oldPrice}$</span>
@@ -258,7 +258,7 @@ const ProductDetails = () => {
                       <span className="icon">
                         <ImPriceTags />
                       </span>
-                      <span className="name">Price</span>
+                      <span className="name">Giá</span>
                     </div>
                     <div className="col-sm-9">
                       : <span>{productData?.price}$</span>
@@ -270,7 +270,7 @@ const ProductDetails = () => {
                       <span className="icon">
                         <IoIosCart />
                       </span>
-                      <span className="name">Stock</span>
+                      <span className="name">Kho</span>
                     </div>
                     <div className="col-sm-9">
                       : <span>({productData?.countInStock}) Cái</span>
@@ -281,10 +281,10 @@ const ProductDetails = () => {
                       <span className="icon">
                         <IoStarHalf />
                       </span>
-                      <span className="name">Review</span>
+                      <span className="name">Đánh Giá</span>
                     </div>
                     <div className="col-sm-9">
-                      : <span>({reviewDatas?.length}) Review</span>
+                      : <span>({reviewDatas?.length}) Đánh Giá</span>
                     </div>
                   </div>
                   <div className="row">
@@ -292,7 +292,7 @@ const ProductDetails = () => {
                       <span className="icon">
                         <IoStarHalf />
                       </span>
-                      <span className="name">Review</span>
+                      <span className="name">Ngày Tạo</span>
                     </div>
                     <div className="col-sm-9">
                       : <span>({productData?.dateCreated})</span>
@@ -303,13 +303,13 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className="p-4">
-            <h5 className="mt-4 mb-3">Product Description</h5>
+            <h5 className="mt-4 mb-3">Mô Tả Sản Phẩm</h5>
             <p>{productData?.description}</p>
-            {/* <h5 className="mt-4 mb-4">Rating Analytics</h5>
+            {/* <h5 className="mt-4 mb-4">Phân Tích Đánh Giá</h5>
             <div className="rating-container">
               <div className="rating-analytics">
                 <div className="rating-bar">
-                  <span>5 Star</span>
+                  <span>5 Sao</span>
                   <div className="bar">
                     <div className="bar-fill" style={{ width: '80%' }}></div>
                   </div>
@@ -317,7 +317,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="rating-bar">
-                  <span>4 Star</span>
+                  <span>4 Sao</span>
                   <div className="bar">
                     <div className="bar-fill" style={{ width: '50%' }}></div>
                   </div>
@@ -325,7 +325,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="rating-bar">
-                  <span>3 Star</span>
+                  <span>3 Sao</span>
                   <div className="bar">
                     <div className="bar-fill" style={{ width: '30%' }}></div>
                   </div>
@@ -333,7 +333,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="rating-bar">
-                  <span>2 Star</span>
+                  <span>2 Sao</span>
                   <div className="bar">
                     <div className="bar-fill" style={{ width: '20%' }}></div>
                   </div>
@@ -341,7 +341,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="rating-bar">
-                  <span>1 Star</span>
+                  <span>1 Sao</span>
                   <div className="bar">
                     <div className="bar-fill" style={{ width: '10%' }}></div>
                   </div>
@@ -350,7 +350,7 @@ const ProductDetails = () => {
               </div>
 
               <div className="rating-summary">
-                <p>Total Review ({totalReviews})</p>
+                <p>Tổng Đánh Giá ({totalReviews})</p>
                 <h1>{averageRating}</h1>
                 <div className="stars">
                   {[...Array(Math.floor(averageRating))].map(() => (
@@ -360,10 +360,10 @@ const ProductDetails = () => {
                     <i className="fas fa-star-half-alt"></i>
                   )}
                 </div>
-                <p>Your Average Rating Star</p>
+                <p>Đánh Giá Trung Bình Của Bạn</p>
               </div>
             </div> */}
-            <h5 className="mt-4 mb-4">Customer Review</h5>
+            <h5 className="mt-4 mb-4">Đánh Giá Của Khách Hàng</h5>
             <div className="review_section">
               {
                 reviewDatas?.map((item, index) => {
@@ -396,7 +396,7 @@ const ProductDetails = () => {
                           <div class="ml-auto">
                             <Button className="btn-big btn-blue btn-lg btn-round">
                               <FaReply />
-                              &nbsp; Reply
+                              &nbsp; Trả Lời
                             </Button>
                           </div>
                         </div>
@@ -412,10 +412,10 @@ const ProductDetails = () => {
                 })
               }
             </div>
-            {/* <h5 className="mt-4 mb-4">Review Reply Form</h5>
+            {/* <h5 className="mt-4 mb-4">Form Trả Lời Đánh Giá</h5>
             <form action="" className="review_form">
-              <textarea placeholder="Wrire here"></textarea>
-              <Button className="btn-blue">drop your replies</Button>
+              <textarea placeholder="Viết ở đây"></textarea>
+              <Button className="btn-blue">Gửi trả lời của bạn</Button>
             </form> */}
           </div>
         </div>

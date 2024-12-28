@@ -51,7 +51,7 @@ const Login = () => {
         context.setAlertBox({
           open: true,
           error: false,
-          msg: response.msg || 'Đăng nhập thành công.',
+          msg: response.msg || (formFields.isAdmin ? 'Đăng nhập quản trị thành công.' : 'Đăng nhập giao diện thành công.'),
         });
         setTimeout(() => {
           window.location.href = '/';

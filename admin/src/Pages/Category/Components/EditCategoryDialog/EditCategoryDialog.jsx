@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Button,
   Dialog,
@@ -12,8 +13,8 @@ import {
   TextField,
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
-import React  from 'react';
 import ImageUpload from '../../../../Components/ImageUpload/ImageUpload';
+import { deleteData } from '../../../../utils/api';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
@@ -32,6 +33,12 @@ const EditCategoryDialog = ({
   onChangeFile,
   removeFile,
 }) => {
+  const [files, setFiles] = useState([]);
+
+  const removeFileHandler = async (index, preview) => {
+   await deleteData(`/api/products/delete-image?publicId=${preview.publicId}`);
+  };
+
   return (
     <div className="grid grid-cols-4 grid-rows-5 gap-4">
       <div className="col-span-4 row-span-5 ">
@@ -95,7 +102,6 @@ const EditCategoryDialog = ({
                           key={index}
                           value={colorCode}
                           style={{
-                            // backgroundColor: colorCode,
                             padding: '12px',
                           }}
                         >
@@ -117,7 +123,7 @@ const EditCategoryDialog = ({
                   <ImageUpload
                     previews={previews}
                     onChangeFile={onChangeFile}
-                    removeFile={removeFile}
+                    removeFile={removeFileHandler}
                   />
 
                   <DialogActions>

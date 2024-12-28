@@ -23,6 +23,13 @@ const SideBar = () => {
       setIsToggleSubmenu(true);
     }
   };
+  const logout = () => {
+    localStorage.clear();
+    setAnchorEl(null)
+    setTimeout(() => {
+      navigate("/login")
+    }, 1000);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -137,8 +144,8 @@ const SideBar = () => {
       <hr />
       <div className="logoutWrapper">
         <div className="logoutBox">
-          <Button variant="contained">
-            <HiOutlineLogout /> Logout
+          <Button onClick={logout} variant="contained">
+            <HiOutlineLogout /> Đăng xuất
           </Button>
         </div>
       </div>

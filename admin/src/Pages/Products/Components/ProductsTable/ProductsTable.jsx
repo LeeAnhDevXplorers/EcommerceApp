@@ -4,6 +4,7 @@ import React from 'react';
 import { FaEye, FaPencilAlt } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+
 const ProductsTable = ({
   productList,
   loading,
@@ -18,14 +19,14 @@ const ProductsTable = ({
         <thead className="thead-dark">
           <tr>
             <th>UID</th>
-            <th>PRODUCT</th>
-            <th>CATEGORY</th>
-            <th>SUB CATEGORY</th>
-            <th>BRAND</th>
-            <th>PRICE</th>
-            <th>STOCK</th>
-            <th>RATING</th>
-            <th>ACTION</th>
+            <th>SẢN PHẨM</th>
+            <th>LOẠI</th>
+            <th>PHÂN LOẠI</th>
+            <th>THƯƠNG HIỆU</th>
+            <th>GIÁ</th>
+            <th>KHO</th>
+            <th>ĐÁNH GIÁ</th>
+            <th>HÀNH ĐỘNG</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +45,7 @@ const ProductsTable = ({
                               item.images?.[1]?.replace(/\\/g, '/') ||
                               'defaultImage.jpg'
                             }`}
-                            alt="Product"
+                            alt="Sản phẩm"
                             className="w-100"
                           />
                         </div>
@@ -68,7 +69,7 @@ const ProductsTable = ({
                     <div className="actions d-flex align-items-center">
                       <Link
                         to={`/product/producDetails/${item.id}`}
-                        aria-label="View product details"
+                        aria-label="Xem chi tiết sản phẩm"
                       >
                         <Button className="secondary" color="secondary">
                           <FaEye />
@@ -78,7 +79,7 @@ const ProductsTable = ({
                         <Button
                           className="success"
                           color="success"
-                          aria-label="Edit product"
+                          aria-label="Chỉnh sửa sản phẩm"
                           onClick={() => handleEditP(item._id)}
                         >
                           <FaPencilAlt />
@@ -89,7 +90,7 @@ const ProductsTable = ({
                         <Button
                           className="error"
                           color="error"
-                          aria-label="Delete product"
+                          aria-label="Xóa sản phẩm"
                           onClick={() => handleOpenDeleteDialog(item._id)}
                         >
                           <MdDelete />
@@ -103,7 +104,7 @@ const ProductsTable = ({
           ) : (
             <tr>
               <td colSpan="10" className="text-center">
-                {loading ? 'Loading...' : 'No products found'}
+                {loading ? 'Đang tải...' : 'Không tìm thấy sản phẩm'}
               </td>
             </tr>
           )}
@@ -112,30 +113,5 @@ const ProductsTable = ({
     </div>
   );
 };
-
-// ProductsTable.propTypes = {
-//   productList: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       _id: PropTypes.string,
-//       name: PropTypes.string,
-//       description: PropTypes.string,
-//       images: PropTypes.arrayOf(PropTypes.string),
-//       category: PropTypes.shape({
-//         name: PropTypes.string,
-//       }),
-//       brand: PropTypes.string,
-//       oldPrice: PropTypes.number,
-//       price: PropTypes.number,
-//       countInStock: PropTypes.number,
-//       rating: PropTypes.number,
-//     })
-//   ).isRequired,
-//   loading: PropTypes.bool,
-//   context: PropTypes.shape({
-//     baseUrl: PropTypes.string.isRequired,
-//   }).isRequired,
-//   onEdit: PropTypes.func.isRequired,
-//   onDelete: PropTypes.func.isRequired,
-// };
 
 export default ProductsTable;

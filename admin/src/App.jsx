@@ -22,6 +22,7 @@ import ProductDetails from "./Pages/Products/ProductDetails";
 import ProductRams from "./Pages/Products/ProductRams";
 import ProductUpload from "./Pages/Products/ProductUpload";
 import SignUp from "./Pages/SignUp/SignUp";
+import VerifyOTP from "./Pages/OTP/VerifyOTP";
 
 const MyContext = createContext();
 const App = () => {
@@ -204,6 +205,11 @@ const App = () => {
                   path="/product/orders"
                   exact={true}
                   element={<Orders />}
+                />
+                <Route
+                  path="/verify-otp"
+                  exact={true}
+                  element={<VerifyOTP />}
                 />
               </Routes>
             </div>

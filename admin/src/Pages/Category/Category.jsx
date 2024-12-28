@@ -62,7 +62,7 @@ const Category = () => {
       const response = await fetchDataFromApi(`/api/category?page=${page}`);
       setCatData(response); 
     } catch (error) {
-      console.error('Failed to fetch categories:', error);
+      console.error('Không thể lấy danh sách danh mục:', error);
     } finally {
       setLoading(false); 
     }
@@ -137,7 +137,7 @@ const Category = () => {
         open: true,
       });
     } catch (error) {
-      console.error('Failed to edit category:', error);
+      console.error('Không thể chỉnh sửa danh mục:', error);
       context.setAlertBox({
         error: true,
         msg: 'Lỗi xảy ra khi chỉnh sửa danh mục',
@@ -223,7 +223,7 @@ const Category = () => {
           {/* Header */}
           <div className="MuiBox-root css-99a237 d-flex">
             <h6 className="MuiTypography-root MuiTypography-h6 css-66yapz-MuiTypography-root">
-              Projects Table
+              Danh sách danh mục
             </h6>
             <Breadcrumbs
               aria-label="breadcrumb"
@@ -232,17 +232,17 @@ const Category = () => {
               <StyleBreadcrumb
                 component="a"
                 href="/"
-                label="Dashboard"
+                label="Bảng Điều Khiển"
                 icon={<HomeIcon fontSize="small" />}
               />
               <StyleBreadcrumb
                 href="#"
-                label="Products"
+                label="Sản Phẩm"
                 deleteIcon={<ExpandMoreIcon />}
               />
               <Button className="btn-blue btn-lg">
                 <Link style={{ color: '#fff' }} to={'/category/categoryadd'}>
-                  Thêm danh mục
+                  Thêm Danh Mục
                 </Link>
               </Button>
             </Breadcrumbs>
@@ -310,3 +310,4 @@ const Category = () => {
 };
 
 export default Category;
+

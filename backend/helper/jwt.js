@@ -13,6 +13,7 @@ function authJwt() {
       { url: /\/api\/products/, methods: ['GET'] }, // Bỏ qua xác thực cho /api/products (chỉ xem sản phẩm)
       { url: /\/api\/category/, methods: ['GET'] }, // Bỏ qua xác thực cho /api/category (chỉ xem danh mục)
       { url: /\/api\/subcategory/, methods: ['GET'] }, // Bỏ qua xác thực cho /api/subcategory
+      { url: /\/api\/products\/delete-image/, methods: ['DELETE'] }, // Bỏ qua xác thực cho /api/subcategory
     ],
   });
 }

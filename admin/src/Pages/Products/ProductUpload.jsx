@@ -343,29 +343,29 @@ const removeFile = async (url) => {
   return (
     <div className="right-content w-100">
       <div className="card shadow border-0 w-100 flex-row p-4">
-        <h5 className="mb-0">Product Upload</h5>
+        <h5 className="mb-0">Tải lên sản phẩm</h5>
         <Breadcrumbs aria-label="breadcrumb" className="ml-auto breadcrumbs_">
           <StyleBreadcrumb
             component="a"
             href="/"
-            label="Dashboard"
+            label="Bảng điều khiển"
             icon={<HomeIcon fontSize="small" />}
           />
           <StyleBreadcrumb
             href="#"
-            label="Products"
+            label="Sản phẩm"
             deleteIcon={<ExpandMoreIcon />}
           />
-          <StyleBreadcrumb label="Product Upload" />
+          <StyleBreadcrumb label="Tải lên sản phẩm" />
         </Breadcrumbs>
       </div>
       <form onSubmit={addProduct} className="form">
         <div className="row">
           <div className="col-md-12">
             <div className="card mt-0 p4 w-100">
-              <h5 className="mb-5 !text-4xl">Nhập thông tin sản phẩm</h5>
+              <h5 className="mb-5 !text-4xl">Nhập thông tin sản phẩm</h5>
               <div className="form-group mb-4">
-                <h6 className="mb-2">Tên sản phẩm</h6>
+                <h6 className="mb-2">Tên sản phẩm</h6>
                 <input
                   type="text"
                   name="name"
@@ -374,7 +374,7 @@ const removeFile = async (url) => {
                 />
               </div>
               <div className="form-group">
-                <h6>Mô tả sản phẩm</h6>
+                <h6>Mô tả sản phẩm</h6>
                 <textarea
                   rows="5"
                   cols="10"
@@ -386,7 +386,7 @@ const removeFile = async (url) => {
               <div className="row">
                 <div className="col">
                   <div className="form-group">
-                    <h6>Danh mục</h6>
+                    <h6>Danh mục</h6>
                     <Select
                       value={formFields.category || ""}
                       onChange={(e) => handleSelectChange(e, "category")}
@@ -394,7 +394,7 @@ const removeFile = async (url) => {
                       className="w-100"
                     >
                       <MenuItem value="">
-                        <em>None</em>
+                        <em>Không có</em>
                       </MenuItem>
                       {catData.length === 0 ? (
                         <MenuItem disabled>Không tìm thấy danh mục</MenuItem>
@@ -414,7 +414,7 @@ const removeFile = async (url) => {
                 </div>
                 <div className="col">
                   <div className="form-group">
-                    <h6>Danh mục con</h6>
+                    <h6>Danh mục con</h6>
                     <Select
                       value={subCatVal}
                       onChange={handleSelectSubCatChange}
@@ -422,11 +422,11 @@ const removeFile = async (url) => {
                       className="w-100"
                     >
                       <MenuItem value="">
-                        <em>None</em>
+                        <em>Không có</em>
                       </MenuItem>
                       {subCategories?.map((item, index) => (
                         <MenuItem key={index} value={item._id}>
-                          {item.subCat || "No Subcategory"}
+                          {item.subCat || "Không có danh mục con"}
                         </MenuItem>
                       ))}
                     </Select>
@@ -436,7 +436,7 @@ const removeFile = async (url) => {
               <div className="row">
                 <div className="col">
                   <div className="form-group">
-                    <h6>Giá sản phẩm</h6>
+                    <h6>Giá sản phẩm</h6>
                     <input
                       type="text"
                       name="oldPrice"
@@ -448,7 +448,7 @@ const removeFile = async (url) => {
 
                 <div className="col">
                   <div className="form-group">
-                    <h6>Tồn kho</h6>
+                    <h6>Tồn kho</h6>
                     <input
                       type="text"
                       name="countInStock"
@@ -462,7 +462,7 @@ const removeFile = async (url) => {
               <div className="row">
                 <div className="col">
                   <div className="form-group">
-                    <h6>Địa chỉ</h6>
+                    <h6>Địa chỉ</h6>
                     <input
                       type="text"
                       name="brand"
@@ -473,7 +473,7 @@ const removeFile = async (url) => {
                 </div>
                 <div className="col">
                   <div className="form-group">
-                    <h6>Is Featured</h6>
+                    <h6>Đặc trưng</h6>
                     <Select
                       value={formFields.isFeatured}
                       onChange={(e) => handleSelectChange(e, "isFeatured")}
@@ -481,14 +481,14 @@ const removeFile = async (url) => {
                       displayEmpty
                       className="w-100"
                     >
-                      <MenuItem value={false}>False</MenuItem>
-                      <MenuItem value={true}>True</MenuItem>
+                      <MenuItem value={false}>Không</MenuItem>
+                      <MenuItem value={true}>Có</MenuItem>
                     </Select>
                   </div>
                 </div>
                 <div className="col">
                   <div className="form-group">
-                    <h6>Giảm giá (%)</h6>
+                    <h6>Giảm giá (%)</h6>
                     <input
                       type="text"
                       name="discount"
@@ -501,7 +501,7 @@ const removeFile = async (url) => {
               <div className="row">
                 <div className="col">
                   <div className="form-group">
-                    <h6>PRODUCT RAM</h6>
+                    <h6>RAM SẢN PHẨM</h6>
                     <FormControl sx={{ m: 1, width: "100%" }}>
                       <Select
                         multiple
@@ -529,7 +529,7 @@ const removeFile = async (url) => {
                 </div>
                 <div className="col">
                   <div className="form-group">
-                    <h6>PRODUCT WEIGHT</h6>
+                    <h6>TRỌNG LƯỢNG SẢN PHẨM</h6>
                     <FormControl sx={{ m: 1, width: "100%" }}>
                       <Select
                         multiple
@@ -562,7 +562,7 @@ const removeFile = async (url) => {
                 </div>
                 <div className="col">
                   <div className="form-group">
-                    <h6>PRODUCT SIZE</h6>
+                    <h6>KÍCH THƯỚC SẢN PHẨM</h6>
                     <FormControl sx={{ m: 1, width: "100%" }}>
                       <Select
                         multiple
@@ -591,7 +591,7 @@ const removeFile = async (url) => {
               </div>
               <div className="row">
                 <div className="form-group">
-                  <h5>LOCATION</h5>
+                  <h5>ĐỊA ĐIỂM</h5>
                   {context.countryList.length !== 0 && <CountryDrop />}
                 </div>
               </div>
@@ -601,7 +601,7 @@ const removeFile = async (url) => {
 
         <div className="card p-4 mt-0 w-100">
           <div className="imagesUploadSec">
-            <h5 className="mb-4">Media And Published</h5>
+            <h5 className="mb-4">Phương tiện và xuất bản</h5>
             <div className="imgUploadBox d-flex align-items-center">
               {previews.length !== 0 &&
                 previews.map((item, index) => (
@@ -633,18 +633,8 @@ const removeFile = async (url) => {
                   name="images"
                 />
                 <div className="info">
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth="0"
-                    viewBox="0 0 576 512"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M480 416v16c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V176c0-26.51 21.49-48 48-48h16v48H54a6 6 0 0 0-6 6v244a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6v-10h48zm42-336H150a6 6 0 0 0-6 6v244a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6V86a6 6 0 0 0-6-6zm6-48c26.51 0 48 21.49 48 48v256c0 26.51-21.49 48-48 48H144c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h384zM264 144c0 22.091-17.909 40-40 40s-40-17.909-40-40 17.909-40 40-40 40 17.909 40 40zm-72 96l39.515-39.515c4.686-4.686 12.284-4.686 16.971 0L288 240l103.515-103.515c4.686-4.686 12.284-4.686 16.971 0L480 208v80H192v-48z"></path>
-                  </svg>
-                  <h5>Image Upload</h5>
+                 
+                  <h5>Tải lên hình ảnh</h5>
                 </div>
               </div>
             </div>
@@ -653,7 +643,7 @@ const removeFile = async (url) => {
               type="submit"
               className="btn-blue btn-big btn-lg btn-round w-100 mt-5"
             >
-              &nbsp; PUBLISH AND VIEW
+              &nbsp; XUẤT BẢN VÀ XEM
             </Button>
           </div>
         </div>

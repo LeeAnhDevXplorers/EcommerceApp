@@ -89,7 +89,7 @@ const ProductEditDialog = ({
         }
       })
       .catch((error) => {
-        console.error("Error fetching categories:", error);
+        console.error("Lỗi khi lấy danh mục:", error);
         setCatData([]);
       })
       .finally(() => {
@@ -129,7 +129,7 @@ const ProductEditDialog = ({
         }
       })
       .catch((error) => {
-        console.error("Error fetching categories:", error);
+        console.error("Lỗi khi lấy danh mục:", error);
         setsubCatData([]);
       })
       .finally(() => {
@@ -174,7 +174,7 @@ const ProductEditDialog = ({
               sx={{ ml: 2, flex: 1, fontSize: "1.6rem" }}
               component="div"
             >
-              Đóng
+              Đóng
             </Typography>
           </Button>
           <Button
@@ -185,7 +185,7 @@ const ProductEditDialog = ({
             color="inherit"
             onClick={editPFun}
           >
-            Lưu những thay đổi
+            Lưu những thay đổi
           </Button>
         </Toolbar>
       </AppBar>{" "}
@@ -196,7 +196,7 @@ const ProductEditDialog = ({
             <TextField
               required
               id="outlined-required"
-              label="Tên sản phẩm"
+              label="Tên sản phẩm"
               fullWidth
               className="mb-4"
               defaultValue="name"
@@ -217,7 +217,7 @@ const ProductEditDialog = ({
               className="mb-4"
               required
               id="outlined-required"
-              label="Mô tả sản phẩm"
+              label="Mô tả sản phẩm"
               rows="5"
               cols="10"
               name="description"
@@ -231,7 +231,7 @@ const ProductEditDialog = ({
                   className="mb-4"
                   id="outlined-required"
                   type="text"
-                  label="Giảm giá (%)"
+                  label="Giảm giá (%)"
                   name="discount"
                   onChange={changeInput}
                   value={formFields.discount}
@@ -241,7 +241,7 @@ const ProductEditDialog = ({
                 <TextField
                   required
                   id="outlined-required"
-                  label="Giá cũ"
+                  label="Giá cũ"
                   fullWidth
                   className="mb-4"
                   defaultValue="oldPrice"
@@ -255,7 +255,7 @@ const ProductEditDialog = ({
                   autoFocus
                   required
                   id="outlined-required"
-                  label="Địa điểm"
+                  label="Địa điểm"
                   fullWidth
                   className="mb-4"
                   name="brand"
@@ -268,7 +268,7 @@ const ProductEditDialog = ({
                 <TextField
                   required
                   id="outlined-required"
-                  label="Tồn kho"
+                  label="Tồn kho"
                   fullWidth
                   className="mb-4"
                   defaultValue="countInStock"
@@ -286,8 +286,8 @@ const ProductEditDialog = ({
                   marginTop: "10px",
                 }}
               >
-                Bạn vui lòng nhập lại giá trị mới khi chỉnh sửa (Nếu không chọn
-                sẽ mất)
+                Bạn vui lòng nhập lại giá trị mới khi chỉnh sửa (Nếu không chọn
+                sẽ mất)
               </h6>
               <div className="d-flex gap-4">
                 <div className="w-100">
@@ -331,7 +331,7 @@ const ProductEditDialog = ({
                         value={item._id || ""}
                         onClick={handleSelectSubCatChange}
                       >
-                        {item.subCat || "No Subcategory"}
+                        {item.subCat || "Không có danh mục phụ"}
                       </MenuItem>
                     ))}
                   </Select>
@@ -412,7 +412,7 @@ const ProductEditDialog = ({
               </div>
               <div className="row">
                 <div className="form-group" style={{ padding: "15px" }}>
-                  <h5>LOCATION</h5>
+                  <h5>ĐỊA ĐIỂM</h5>
                   {context.countryList.length !== 0 && (
                     <CountryDrop
                       countryList={context.countryList}

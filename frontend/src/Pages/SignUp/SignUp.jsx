@@ -48,21 +48,16 @@ const SignUp = () => {
     }
 
     try {
-      const res = await postData('/api/user/signup', {
-        name,
-        phone,
-        email,
-        password,
-      });
+      const res = await postData('/api/user/signup', formFields);
 
       if (res.status) {
         context.setAlertBox({
           open: true,
           error: false,
-          msg: 'Đăng ký thành công!',
+          msg: res.msg,
         });
 
-        navigate('/signIn');
+        navigate('/verify-otp', { state: { userId: res.userId } });
       } else {
         context.setAlertBox({
           open: true,
@@ -80,6 +75,34 @@ const SignUp = () => {
       });
     }
   };
+
+  const handleGoogleAuth = async () => {
+    try {
+      const res = await postData('/api/user/authWithGoogle', formFields);
+      if (res.status) {
+        context.setAlertBox({
+          open: true,
+          error: false,
+          msg: res.msg,
+        });
+        navigate('/signIn');
+      } else {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: res.msg,
+        });
+      }
+    } catch (error) {
+      console.error('Google Auth failed:', error);
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: error.response?.data?.msg || 'Có lỗi xảy ra, vui lòng thử lại!',
+      });
+    }
+  };
+
   return (
     <div>
       <section className="section signInPage">
@@ -187,7 +210,7 @@ const SignUp = () => {
                Hoặc tiếp tục với tài khoản xã hội
               </h4>
               <div className="form-btn">
-                <Button className="logoBtn">
+                <Button className="logoBtn" onClick={handleGoogleAuth}>
                   <span className="cursor">
                     <img
                       className="w-100"

@@ -46,11 +46,11 @@ const CountryDrop = (props) => {
     <div>
       <Button className="countryDrop" onClick={() => setisOpenModal(true)}>
         <div className="info d-flex flex-column">
-          <span className="lable">Your Location</span>
+          <span className="lable">Vị trí của bạn</span>
           <span className="name">
             {context.selectedCountry && context.selectedCountry.length > 10
               ? context.selectedCountry?.substr(0, 10) + "..."
-              : context.selectedCountry || "Select Location"}
+              : context.selectedCountry || "Chọn vị trí"}
           </span>
         </div>
         <span className="ml-auto icon-angle">
@@ -63,15 +63,15 @@ const CountryDrop = (props) => {
         className="locationModal"
         TransitionComponent={Transition}
       >
-        <h3>Choose your Delyvery Location</h3>
-        <p>Enter your address and we will specify the offer for your area.</p>
+        <h3>Chọn vị trí giao hàng của bạn</h3>
+        <p>Nhập địa chỉ của bạn và chúng tôi sẽ chỉ định ưu đãi cho khu vực của bạn.</p>
         <Button className="close_" onClick={() => setisOpenModal(false)}>
           <IoIosCloseCircleOutline />
         </Button>
         <div class="headerSearch ml-3 mr-3">
           <input
             type="text"
-            placeholder="Search your area..."
+            placeholder="Tìm kiếm khu vực của bạn..."
             onChange={filterList}
           />
           <Button>

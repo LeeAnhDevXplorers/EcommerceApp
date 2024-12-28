@@ -19,7 +19,6 @@ import { GiStarsStack } from 'react-icons/gi';
 import { HiDotsVertical } from 'react-icons/hi';
 import { IoTimerOutline } from 'react-icons/io5';
 
-
 import { MyContext } from '../../App';
 import DashboardBox from './Components/DashboardBox';
 
@@ -56,7 +55,7 @@ const Home = () => {
   const [open, setOpen] = useState(false);
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const context = useContext(MyContext);
@@ -73,7 +72,7 @@ const Home = () => {
   });
   const opens = Boolean(anchorEl);
   useEffect(() => {
-    fetchProducts(); // Initial fetch for products
+    fetchProducts();
   }, []);
 
   const fetchProducts = async (page = 1) => {
@@ -88,10 +87,10 @@ const Home = () => {
         setProductList([]);
       }
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('Lỗi khi lấy sản phẩm:', error);
       context.setAlertBox({
         error: true,
-        msg: 'Failed to fetch products',
+        msg: 'Không thể lấy sản phẩm',
         open: true,
       });
     } finally {
@@ -104,16 +103,16 @@ const Home = () => {
   };
   const handleCloseDeleteDialog = () => {
     setOpenDeleteDialog(false); 
-    setDeleteID(null); // Đặt lại ID xóa
+    setDeleteID(null);
   };
 
   const handleOpenDeleteDialog = (_id) => {
-    setDeleteID(_id); // Cập nhật ID của danh mục đang xóa
-    setOpenDeleteDialog(false); // Mở dialog xóa
+    setDeleteID(_id);
+    setOpenDeleteDialog(false);
   };
 
   const handleClose = () => {
-    setOpen(false); // Đóng dialog
+    setOpen(false);
     setAnchorEl(null);
   };
 
@@ -126,17 +125,17 @@ const Home = () => {
         setFormFields({
           name: res.name,
           description: res.description,
-          images: res.images || [], // Set an empty array if images are undefined
+          images: res.images || [],
           brand: res.brand || '',
           price: res.price || '',
           oldPrice: res.oldPrice || '',
-          category: res.category ? res.category.name : '', // assuming res.category is an object
+          category: res.category ? res.category.name : '',
           countInStock: res.countInStock || '',
           isFeatured: res.isFeatured || false,
         });
       }
     } catch (error) {
-      console.error('Error fetching product data for edit:', error);
+      console.error('Lỗi khi lấy dữ liệu sản phẩm để chỉnh sửa:', error);
     }
   };
 
@@ -147,7 +146,7 @@ const Home = () => {
       await editData(`/api/products/${EditP}`, {
         name: formFields.name,
         description: formFields.description,
-        images: formFields.images, // Assuming images is an array of URLs
+        images: formFields.images,
         brand: formFields.brand,
         price: formFields.price,
         oldPrice: formFields.oldPrice,
@@ -155,15 +154,15 @@ const Home = () => {
         countInStock: formFields.countInStock,
         isFeatured: formFields.isFeatured,
       });
-      await fetchProducts(); // Refresh product list after editing
-      handleClose(); // Close the dialog after saving
+      await fetchProducts();
+      handleClose();
     } catch (error) {
-      console.error('Failed to edit product:', error);
+      console.error('Không thể chỉnh sửa sản phẩm:', error);
     } finally {
-      setLoading(false); // Stop loading spinner
+      setLoading(false);
       context.setAlertBox({
         error: false,
-        msg: 'Product edited successfully',
+        msg: 'Chỉnh sửa sản phẩm thành công',
         open: true,
       });
     }
@@ -176,14 +175,14 @@ const Home = () => {
       handleCloseDeleteDialog();
       context.setAlertBox({
         error: false,
-        msg: 'Product deleted successfully',
+        msg: 'Xóa sản phẩm thành công',
         open: true,
       });
     } catch (error) {
-      console.error('Failed to delete product:', error);
+      console.error('Không thể xóa sản phẩm:', error);
       context.setAlertBox({
         error: true,
-        msg: 'Error deleting product',
+        msg: 'Lỗi khi xóa sản phẩm',
         open: true,
       });
     }
@@ -216,7 +215,7 @@ const Home = () => {
         <div className="col-md-4 pl-0">
           <div className="box graphBox">
             <div className="d-flex align-items-center w-100 mt-5 bottomElm">
-              <h4 className="text-white mb-0 mt-0">Total Sales</h4>
+              <h4 className="text-white mb-0 mt-0">Tổng doanh thu</h4>
               <Button
                 className="ml-auto toggleIcon"
                 aria-label="more"
@@ -247,24 +246,24 @@ const Home = () => {
               >
                 <MenuItem onClick={handleClose}>
                   <IoTimerOutline />
-                  Last Day
+                  Ngày cuối
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <IoTimerOutline />
-                  Last Week
+                  Tuần cuối
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <IoTimerOutline />
-                  Last Month
+                  Tháng cuối
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <IoTimerOutline />
-                  Last Year
+                  Năm cuối
                 </MenuItem>
               </Menu>
             </div>
             <h3 className="text-white font-weight-bold">#3,123,23,235.00</h3>
-            <p className="text-white">$3,567,32.0 in last month</p>
+            <p className="text-white">$3,567,32.0 trong tháng trước</p>
             <Chart
               chartType="PieChart"
               data={data}
@@ -276,10 +275,10 @@ const Home = () => {
         </div>
       </div>
       <div className="card shadow border-0 p-3 mt-4 w-100">
-        <h3 className="hd">Best Selling Products</h3>
+        <h3 className="hd">Sản phẩm bán chạy nhất</h3>
         <div className="row cardFilter mt-4">
           <div className="col-md-3">
-            <h4>SHOW BY</h4>
+            <h4>HIỂN THỊ THEO</h4>
             <Select
               value={showBy}
               onChange={(e) => setShowBy(e.target.value)}
@@ -288,15 +287,15 @@ const Home = () => {
               className="w-100"
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Không</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>Mười</MenuItem>
+              <MenuItem value={20}>Hai mươi</MenuItem>
+              <MenuItem value={30}>Ba mươi</MenuItem>
             </Select>
           </div>
           <div className="col-md-3">
-            <h4>CATEGORY BY</h4>
+            <h4>THEO DANH MỤC</h4>
             <Select
               value={showCat}
               onChange={(e) => setShowCat(e.target.value)}
@@ -305,15 +304,15 @@ const Home = () => {
               className="w-100"
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Không</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>Mười</MenuItem>
+              <MenuItem value={20}>Hai mươi</MenuItem>
+              <MenuItem value={30}>Ba mươi</MenuItem>
             </Select>
           </div>
           <div className="col-md-3">
-            <h4>BRAND BY</h4>
+            <h4>THEO THƯƠNG HIỆU</h4>
             <Select
               value={showBrand}
               onChange={(e) => setshowBrand(e.target.value)}
@@ -322,15 +321,15 @@ const Home = () => {
               className="w-100"
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Không</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>Mười</MenuItem>
+              <MenuItem value={20}>Hai mươi</MenuItem>
+              <MenuItem value={30}>Ba mươi</MenuItem>
             </Select>
           </div>
           <div className="col-md-3">
-            <h4>SEARCH BY</h4>
+            <h4>TÌM KIẾM THEO</h4>
             <Select
               value={showSearch}
               onChange={(e) => setshowSearch(e.target.value)}
@@ -339,11 +338,11 @@ const Home = () => {
               className="w-100"
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Không</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>Mười</MenuItem>
+              <MenuItem value={20}>Hai mươi</MenuItem>
+              <MenuItem value={30}>Ba mươi</MenuItem>
             </Select>
           </div>
         </div>

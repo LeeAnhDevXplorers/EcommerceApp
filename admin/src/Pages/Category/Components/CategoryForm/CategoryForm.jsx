@@ -21,7 +21,7 @@ const CategoryForm = ({
     <div className="form-group">
       {isShowCatPage ? (
         <>
-          <h6 className="mb-2">Category</h6>
+          <h6 className="mb-2">Danh mục</h6>
           <FormControl fullWidth variant="outlined">
             <Select
               labelId="category-select-label"
@@ -31,7 +31,7 @@ const CategoryForm = ({
               name="category"
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Không có</em>
               </MenuItem>
               {loading ? (
                 <CircularProgress size={24} />
@@ -48,7 +48,7 @@ const CategoryForm = ({
           {formErrors.subCat && (
             <span className="error-message">{formErrors.subCat}</span>
           )}
-          <h6 className="mb-2">SUB CATEGORY NAME</h6>
+          <h6 className="mb-2">TÊN DANH MỤC CON</h6>
           {formErrors.subCat && (
             <span style={{ fontSize: '1.4rem' }} className="text-danger">
               {formErrors.subCat}
@@ -64,7 +64,7 @@ const CategoryForm = ({
         </>
       ) : (
         <>
-          <h6 className="mb-2">CATEGORY NAME</h6>
+          <h6 className="mb-2">TÊN DANH MỤC</h6>
           {formErrors.name && (
             <span style={{ fontSize: '1.4rem' }} className="text-danger">
               {formErrors.name}
@@ -78,7 +78,7 @@ const CategoryForm = ({
             className={formErrors.name ? 'input-error' : ''}
             style={{ marginBottom: '14px' }}
           />
-          <h6 className="mb-2">CATEGORY COLOR</h6>
+          <h6 className="mb-2">MÀU DANH MỤC</h6>
           <FormControl fullWidth variant="outlined">
             <Select
               labelId="color-select-label"

@@ -23,11 +23,11 @@ const AddSubcat = () => {
   const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
-    console.log('Fetching category data...');
+    console.log('Đang lấy dữ liệu danh mục...');
     setLoading(true);
     fetchDataFromApi('/api/category') 
       .then((res) => {
-        console.log('Fetched categories:', res); 
+        console.log('Danh mục đã lấy:', res); 
         if (Array.isArray(res.categoryList)) {
           setCatData(res.categoryList);
         } else {
@@ -35,56 +35,56 @@ const AddSubcat = () => {
         }
       })
       .catch((error) => {
-        console.error('Error fetching categories:', error); 
+        console.error('Lỗi khi lấy danh mục:', error); 
         setCatData([]);
       })
       .finally(() => {
         setLoading(false);
-        console.log('Category data fetching completed'); 
+        console.log('Hoàn thành lấy dữ liệu danh mục'); 
       });
   }, []);
 
   const validateForm = () => {
     const errors = {};
-    if (!formFields.category) errors.category = 'Category name is required';
-    if (!formFields.subCat) errors.subCat = 'SubCat Category name is required';
+    if (!formFields.category) errors.category = 'Tên danh mục là bắt buộc';
+    if (!formFields.subCat) errors.subCat = 'Tên danh mục con là bắt buộc';
     return Object.keys(errors).length === 0;
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Input change: ${name} = ${value}`);
+    console.log(`Thay đổi đầu vào: ${name} = ${value}`);
     setFormFields((prev) => {
       const updated = {
         ...prev,
         [name]: value,
       };
-      console.log('Updated form fields:', updated);
+      console.log('Cập nhật trường biểu mẫu:', updated);
       return updated;
     });
   };
 
   const handleSelectChange = (e) => {
     const value = e.target.value;
-    console.log('Category selected:', value);
+    console.log('Danh mục đã chọn:', value);
     setCategoryVal(value);
     setFormFields((prev) => {
       const updated = {
         ...prev,
         category: value,
       };
-      console.log('Updated form fields after select:', updated);
+      console.log('Cập nhật trường biểu mẫu sau khi chọn:', updated);
       return updated;
     });
   };
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  console.log('Form submit initiated');
+  console.log('Bắt đầu gửi biểu mẫu');
   setLoading(true);
 
   if (!validateForm()) {
     setLoading(false);
-    console.log('Form validation failed');
+    console.log('Xác thực biểu mẫu thất bại');
     return;
   }
 
@@ -95,31 +95,31 @@ const handleSubmit = async (e) => {
 
   try {
     const res = await postData('/api/subCategory/create', data);
-    console.log('API response:', res);
+    console.log('Phản hồi API:', res);
     if (res.success) {
       navigate('/category/categorylist');
       context.setAlertBox({
         open: true,
         error: false,
-        msg: 'Category created successfully!',
+        msg: 'Tạo danh mục thành công!',
       });
     } else {
       context.setAlertBox({
         open: true,
         error: true,
-        msg: res.message || 'An error occurred.',
+        msg: res.message || 'Đã xảy ra lỗi.',
       });
     }
   } catch (error) {
-    console.error('Request failed:', error);
+    console.error('Yêu cầu thất bại:', error);
     context.setAlertBox({
       open: true,
       error: true,
-      msg: 'An error occurred during submission.',
+      msg: 'Đã xảy ra lỗi trong quá trình gửi.',
     });
   } finally {
     setLoading(false);
-    console.log('Form submission completed');
+    console.log('Hoàn thành gửi biểu mẫu');
   }
 };
 
@@ -134,7 +134,7 @@ const handleSubmit = async (e) => {
           justifyContent: 'space-between',
         }}
       >
-        <h5 className="mb-0">Add Sub Category</h5>
+        <h5 className="mb-0">Thêm danh mục con</h5>
         <BreadcrumbsNav />
       </div>
       <form onSubmit={handleSubmit} className="form">
@@ -159,7 +159,7 @@ const handleSubmit = async (e) => {
             className="btn-blue w-100 mt-5"
             disabled={loading}
           >
-            {loading ? 'Publishing...' : 'PUBLISH AND VIEW'}
+            {loading ? 'Đang xuất bản...' : 'XUẤT BẢN VÀ XEM'}
           </Button>
         </div>
       </form>

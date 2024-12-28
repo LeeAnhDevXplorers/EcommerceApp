@@ -68,11 +68,11 @@ const ProductRams = () => {
     const formErrors = {};
 
     if (type === 'ram' && !formFieldsrRam.ramName)
-      formErrors.ramName = 'RAM name is required';
+      formErrors.ramName = 'Tên RAM là bắt buộc';
     if (type === 'weight' && !formFieldsrWeigth.weightName)
-      formErrors.weightName = 'Weight name is required';
+      formErrors.weightName = 'Tên trọng lượng là bắt buộc';
     if (type === 'size' && !formFieldsrSize.sizeName)
-      formErrors.sizeName = 'Size name is required';
+      formErrors.sizeName = 'Tên kích thước là bắt buộc';
 
     setErrors(formErrors);
 
@@ -113,13 +113,13 @@ const ProductRams = () => {
           context.setAlertBox({
             open: true,
             error: false,
-            msg: 'Category created successfully!',
+            msg: 'Danh mục đã được tạo thành công!',
           });
         } else {
           context.setAlertBox({
             open: true,
             error: true,
-            msg: res.message || 'An error occurred.',
+            msg: res.message || 'Đã xảy ra lỗi.',
           });
         }
       } catch (error) {
@@ -127,7 +127,7 @@ const ProductRams = () => {
         context.setAlertBox({
           open: true,
           error: true,
-          msg: 'An error occurred during submission.',
+          msg: 'Đã xảy ra lỗi trong quá trình gửi.',
         });
       } finally {
         setLoading(false);
@@ -149,7 +149,7 @@ const ProductRams = () => {
           context.setAlertBox({
             open: true,
             error: false,
-            msg: 'Weight category created successfully!',
+            msg: 'Danh mục trọng lượng đã được tạo thành công!',
           });
           setTimeout(() => {
             window.location.reload();
@@ -158,14 +158,14 @@ const ProductRams = () => {
           context.setAlertBox({
             open: true,
             error: true,
-            msg: res.message || 'An error occurred.',
+            msg: res.message || 'Đã xảy ra lỗi.',
           });
         }
       } catch (error) {
         context.setAlertBox({
           open: true,
           error: true,
-          msg: 'An error occurred during submission.',
+          msg: 'Đã xảy ra lỗi trong quá trình gửi.',
         });
       } finally {
         setLoading(false);
@@ -187,7 +187,7 @@ const ProductRams = () => {
           context.setAlertBox({
             open: true,
             error: false,
-            msg: 'Size category created successfully!',
+            msg: 'Danh mục kích thước đã được tạo thành công!',
           });
           setTimeout(() => {
             window.location.reload();
@@ -196,14 +196,14 @@ const ProductRams = () => {
           context.setAlertBox({
             open: true,
             error: true,
-            msg: res.message || 'An error occurred.',
+            msg: res.message || 'Đã xảy ra lỗi.',
           });
         }
       } catch (error) {
         context.setAlertBox({
           open: true,
           error: true,
-          msg: 'An error occurred during submission.',
+          msg: 'Đã xảy ra lỗi trong quá trình gửi.',
         });
       } finally {
         setLoading(false);
@@ -259,20 +259,20 @@ const ProductRams = () => {
     <div>
       <div className="right-content w-100">
         <div className="card shadow border-0 w-100 flex-row p-4">
-          <h5 className="mb-0">Product Upload</h5>
+          <h5 className="mb-0">Tải lên sản phẩm</h5>
           <Breadcrumbs aria-label="breadcrumb" className="ml-auto breadcrumbs_">
             <StyleBreadcrumb
               component="a"
               href="/"
-              label="Dashboard"
+              label="Bảng điều khiển"
               icon={<HomeIcon fontSize="small" />}
             />
             <StyleBreadcrumb
               href="#"
-              label="Products"
+              label="Sản phẩm"
               deleteIcon={<ExpandMoreIcon />}
             />
-            <StyleBreadcrumb label="Product Upload" />
+            <StyleBreadcrumb label="Tải lên sản phẩm" />
           </Breadcrumbs>
         </div>
         <div className="row">
@@ -283,7 +283,7 @@ const ProductRams = () => {
                   <div className="col-md-12">
                     <div className="card mt-0 p-4 w-100">
                       <TextField
-                        label="Weight Name"
+                        label="Tên trọng lượng"
                         variant="outlined"
                         type="text"
                         name="weightName"
@@ -310,7 +310,7 @@ const ProductRams = () => {
                     className="btn-blue w-100 mt-5"
                     disabled={loading}
                   >
-                    {loading ? <CircularProgress size={24} /> : 'ADD'}
+                    {loading ? <CircularProgress size={24} /> : 'THÊM'}
                   </Button>
                 </div>
               </form>
@@ -327,8 +327,8 @@ const ProductRams = () => {
                 <thead className="thead-dark">
                   <tr>
                     <th>UID</th>
-                    <th>Name</th>
-                    <th>ACTION</th>
+                    <th>Tên</th>
+                    <th>HÀNH ĐỘNG</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -342,7 +342,7 @@ const ProductRams = () => {
                             <Button
                               className="error"
                               color="error"
-                              aria-label="Delete product"
+                              aria-label="Xóa sản phẩm"
                               onClick={() => handleDeleteWeight(item._id)}
                             >
                               <MdDelete />
@@ -363,7 +363,7 @@ const ProductRams = () => {
                   <div className="col-md-12">
                     <div className="card mt-0 p-4 w-100">
                       <TextField
-                        label="Size Name"
+                        label="Tên kích thước"
                         variant="outlined"
                         type="text"
                         name="sizeName"
@@ -390,7 +390,7 @@ const ProductRams = () => {
                     className="btn-blue w-100 mt-5"
                     disabled={loading}
                   >
-                    {loading ? <CircularProgress size={24} /> : 'ADD'}
+                    {loading ? <CircularProgress size={24} /> : 'THÊM'}
                   </Button>
                 </div>
               </form>
@@ -407,8 +407,8 @@ const ProductRams = () => {
                 <thead className="thead-dark">
                   <tr>
                     <th>UID</th>
-                    <th>Name</th>
-                    <th>ACTION</th>
+                    <th>Tên</th>
+                    <th>HÀNH ĐỘNG</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -422,7 +422,7 @@ const ProductRams = () => {
                             <Button
                               className="error"
                               color="error"
-                              aria-label="Delete product"
+                              aria-label="Xóa sản phẩm"
                               onClick={() => handleDeleteSize(item._id)}
                             >
                               <MdDelete />
@@ -443,7 +443,7 @@ const ProductRams = () => {
                   <div className="col-md-12">
                     <div className="card mt-0 p-4 w-100">
                       <TextField
-                        label="Ram Name"
+                        label="Tên RAM"
                         variant="outlined"
                         type="text"
                         name="ramName"
@@ -468,7 +468,7 @@ const ProductRams = () => {
                     className="btn-blue w-100 mt-5"
                     disabled={loading}
                   >
-                    {loading ? <CircularProgress size={24} /> : 'ADD'}
+                    {loading ? <CircularProgress size={24} /> : 'THÊM'}
                   </Button>
                 </div>
               </form>
@@ -485,8 +485,8 @@ const ProductRams = () => {
                 <thead className="thead-dark">
                   <tr>
                     <th>UID</th>
-                    <th>Name</th>
-                    <th>ACTION</th>
+                    <th>Tên</th>
+                    <th>HÀNH ĐỘNG</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -500,7 +500,7 @@ const ProductRams = () => {
                             <Button
                               className="error"
                               color="error"
-                              aria-label="Delete product"
+                              aria-label="Xóa sản phẩm"
                               onClick={() => handleDeleteRams(item._id)}
                             >
                               <MdDelete />

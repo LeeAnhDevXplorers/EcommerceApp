@@ -19,29 +19,16 @@ const CategoryTable = ({
             <thead className="thead-dark">
               <tr>
                 <th>UID</th>
-                <th>IMAGE</th>
-                <th>NAME CATEGORY</th>
-                <th>COLOR</th>
-                <th>ACTION</th>
+                <th>HÌNH ẢNH</th>
+                <th>TÊN DANH MỤC</th>
+                <th>MÀU SẮC</th>
+                <th>HÀNH ĐỘNG</th>
               </tr>
             </thead>
             <tbody>
               {catData?.categoryList?.map((item, index) => (
                 <tr key={item._id}>
                   <td>#{index + 1}</td>
-                  {/* <td>
-                    <div className="d-flex align-items-center productBox">
-                      <div className="imgWrapper">
-                        <div className="img">
-                          <img
-                            src={item.images?.[0]}
-                            alt={item.name}
-                            className="w-100"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </td> */}
                   <td>
                     <div className="d-flex align-items-center productBox">
                       <div
@@ -66,7 +53,6 @@ const CategoryTable = ({
                             height: '50px',
                           }}
                         >
-                          {/* Lặp qua mảng images và hiển thị tất cả các hình ảnh */}
                           {item.images && item.images.length > 0 ? (
                             item.images.map((image, idx) => (
                               <img
@@ -78,7 +64,7 @@ const CategoryTable = ({
                               />
                             ))
                           ) : (
-                            <p>No images available</p>
+                            <p>Không có hình ảnh</p>
                           )}
                         </div>
                       </div>
@@ -126,9 +112,9 @@ const CategoryTable = ({
             <thead className="thead-dark">
               <tr>
                 <th>UID</th>
-                <th>NAME CATEGORY</th>
-                <th>SUB CATEGORY</th>
-                <th>ACTION</th>
+                <th>TÊN DANH MỤC</th>
+                <th>DANH MỤC CON</th>
+                <th>HÀNH ĐỘNG</th>
               </tr>
             </thead>
             <tbody>

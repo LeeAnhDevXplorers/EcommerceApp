@@ -1,21 +1,16 @@
 import Logout from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import React, { useContext, useState } from 'react';
-import { CiLight } from 'react-icons/ci';
-import { FaBell } from 'react-icons/fa';
 import { IoShieldHalf } from 'react-icons/io5';
-import { MdDarkMode, MdEmail, MdShoppingCart } from 'react-icons/md';
 import { RiMenuUnfold3Line2, RiMenuUnfold4Line2 } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
 import { MyContext } from '../../App';
 import { assets } from '../../assets/assets';
 import SearchBox from '../SearchBox/SearchBox';
-import UserAvataComponent from '../userAvataComponent/userAvataComponent';
 import './Header.css';
 
 const Header = () => {
@@ -75,303 +70,6 @@ const Header = () => {
             <SearchBox />
           </div>
           <div className="col-sm-7 d-flex align-items-center justify-content-end part3 ml-auto">
-            <Button
-              className="rounded-circle mr-3"
-              onClick={() => context.setThemeMode(!context.themeMode)}
-            >
-              <CiLight />
-            </Button>
-            <Button className="rounded-circle mr-3">
-              <MdDarkMode />
-            </Button>
-            <Button className="rounded-circle mr-3">
-              <MdShoppingCart />
-            </Button>
-            <Button className="rounded-circle mr-3">
-              <MdEmail />
-            </Button>
-            <div className="dropdowWrapper posotion-relative">
-              <Button
-                className="rounded-circle mr-3"
-                onClick={handleOpenNotifyDrop}
-              >
-                <FaBell />
-              </Button>
-              <Menu
-                sx={{ marginTop: '22px' }}
-                anchorEl={isOpenNotifyDrop}
-                className="dropdow_list-notify"
-                id="notifications"
-                open={openNotify}
-                onClose={handleClNotifyDrop}
-                onClick={handleClNotifyDrop}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-              >
-                <div className="head p-3">
-                  <h4>Orders (12)</h4>
-                </div>
-                <Divider className="" />
-                <div className="srcoll">
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <UserAvataComponent />
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1 mt-0" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                  <Divider className="mb-1" />
-                  <MenuItem
-                    sx={{ fontSize: '1.5rem' }}
-                    onClick={handleClNotifyDrop}
-                  >
-                    <div className="d-flex">
-                      <div className="userImg">
-                        <span className="rounded-circle">
-                          <img
-                            src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-                            alt="User Avatar"
-                          />
-                        </span>
-                      </div>
-                      <div className="dropdowInfo">
-                        <h4>
-                          <span>
-                            <b>Anh</b>
-                            đã thêm vào danh sách yêu thích của anh ấy
-                            <b> Quần âu dáng suông</b>
-                          </span>
-                        </h4>
-                        <p className="text-sky mb-0">Vài giây trước</p>
-                      </div>
-                    </div>
-                  </MenuItem>
-                </div>
-                <div className="pl-3 pr-3 w-100 pb-2 pt-2">
-                  <Button className="btn-blue w-100">Xem tất cả</Button>
-                </div>
-              </Menu>
-            </div>
-
             {context.isLogin !== true ? (
               <Button className="btn-blue btn-lg btn-round text-white">
                 <Link to={'/login'}>Sign In</Link>
@@ -410,7 +108,7 @@ const Header = () => {
                     <ListItemIcon>
                       <PersonAdd fontSize="small" />
                     </ListItemIcon>
-                    My Account
+                    Tài khoản của bạn
                   </MenuItem>
                   <MenuItem
                     sx={{ fontSize: '1.5rem' }}
@@ -419,13 +117,13 @@ const Header = () => {
                     <ListItemIcon>
                       <IoShieldHalf fontSize="small" />
                     </ListItemIcon>
-                    Reset Password
+                   Đổi mật khẩu
                   </MenuItem>
                   <MenuItem sx={{ fontSize: '1.5rem' }} onClick={logout}>
                     <ListItemIcon>
                       <Logout fontSize="small" />
                     </ListItemIcon>
-                    Logout
+                    Đăng xuất
                   </MenuItem>
                 </Menu>
               </div>

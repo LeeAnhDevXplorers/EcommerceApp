@@ -26,6 +26,24 @@ const usersSchema = new mongoose.Schema(
         required: true,
       },
     ],
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    otp: {
+      type: String,
+    },
+    otpExpired: {
+      type: Date,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

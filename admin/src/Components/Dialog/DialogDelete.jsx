@@ -9,22 +9,22 @@ import {
 import React from 'react';
 
 const ProductDeleteDialog = ({ open, onClose, onDelete }) => {
-  console.log('Delete Dialog Open Status:', open); // Thêm dòng log để kiểm tra trạng thái mở của dialog
+  console.log('Trạng thái mở hộp thoại xóa:', open); 
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Confirm Deletion</DialogTitle>
+      <DialogTitle>Xác nhận xóa</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to delete this product?
+          Bạn có chắc chắn muốn xóa sản phẩm này không?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
-          Cancel
+          Hủy
         </Button>
         <Button onClick={onDelete} color="error" autoFocus>
-          Delete
+          Xóa
         </Button>
       </DialogActions>
     </Dialog>

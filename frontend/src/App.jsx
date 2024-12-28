@@ -19,6 +19,7 @@ import { fetchDataFromApi, postData } from './utils/api';
 import Orders from './Pages/Orders/Orders';
 import Search from './Pages/Listing/Listing';
 import MyAccount from './Pages/MyAccount/MyAccount';
+import VerifyOTP from './Pages/OTP/VerifyOTP';
 
 const MyContext = createContext();
 
@@ -205,6 +206,7 @@ const App = () => {
           <Route path="/orders" exact={true} element={<Orders />} />
           <Route path="/search" exact={true} element={<Search />} />
           <Route path="/my-account" exact={true} element={<MyAccount />} />
+          <Route path="/verify-otp" exact={true} element={<VerifyOTP />} />
         </Routes>
         {isHeaderFooterShow === true && <Footer />}
 

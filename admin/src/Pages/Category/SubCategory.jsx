@@ -124,10 +124,9 @@ const SubCategory = () => {
     <>
       <div className="right-content w-100">
         <div className="card shadow border-0 p-3 mt-4 w-100">
-          {/* Header */}
           <div className="MuiBox-root css-99a237 d-flex">
             <h6 className="MuiTypography-root MuiTypography-h6 css-66yapz-MuiTypography-root">
-              Projects Table
+              Danh sách danh mục con
             </h6>
             <Breadcrumbs
               aria-label="breadcrumb"

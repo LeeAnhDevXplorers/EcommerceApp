@@ -92,7 +92,7 @@ const Products = () => {
         }
       })
       .catch((error) => {
-        console.error('Error fetching categories:', error);
+        console.error('Lỗi khi lấy danh mục:', error);
         setCatData([]);
       })
       .finally(() => {
@@ -106,7 +106,7 @@ const Products = () => {
       const response = await fetchDataFromApi(`/api/subCategory`);
       setsubCatData(response); 
     } catch (error) {
-      console.error('Failed to fetch categories:', error);
+      console.error('Lỗi khi lấy danh mục:', error);
     } finally {
       setLoading(false); 
     }
@@ -139,10 +139,10 @@ const Products = () => {
         setProductList([]);
       }
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('Lỗi khi lấy sản phẩm:', error);
       context.setAlertBox({
         error: true,
-        msg: 'Failed to fetch products',
+        msg: 'Lấy sản phẩm thất bại',
         open: true,
       });
     } finally {
@@ -228,7 +228,7 @@ const Products = () => {
         setPreviews(res.images || []);
       }
     } catch (error) {
-      console.error('Error fetching product data for edit:', error);
+      console.error('Lỗi khi lấy dữ liệu sản phẩm để chỉnh sửa:', error);
     }
   };
 
@@ -287,18 +287,18 @@ const Products = () => {
         handleClose(); 
         context.setAlertBox({
           error: false,
-          msg: 'Product updated successfully',
+          msg: 'Cập nhật sản phẩm thành công',
           open: true,
         });
       });
     } catch (error) {
-      console.error('Error updating product:', error);
+      console.error('Lỗi khi cập nhật sản phẩm:', error);
       context.setAlertBox({
         error: true,
         msg:
           error.response?.data?.message ||
           error.message ||
-          'Failed to update product',
+          'Cập nhật sản phẩm thất bại',
         open: true,
       });
     } finally {
@@ -316,7 +316,7 @@ const Products = () => {
       context.setProgress(100); 
       handleCloseDeleteDialog(); 
     } catch (error) {
-      console.error('Failed to delete product:', error);
+      console.error('Lỗi khi xóa sản phẩm:', error);
       context.setProgress(0); 
     }
   };
@@ -331,7 +331,7 @@ const Products = () => {
         if (file.size > maxSize) {
           context.setAlertBox({
             error: true,
-            msg: `File ${file.name} is too large. Max size is 5MB`,
+            msg: `File ${file.name} quá lớn. Kích thước tối đa là 5MB`,
             open: true,
           });
           return false;
@@ -340,7 +340,7 @@ const Products = () => {
         if (!allowedTypes.includes(file.type)) {
           context.setAlertBox({
             error: true,
-            msg: `File ${file.name} is not a supported image type`,
+            msg: `File ${file.name} không phải là loại hình ảnh được hỗ trợ`,
             open: true,
           });
           return false;
@@ -397,20 +397,20 @@ const Products = () => {
               style={{ color: '#FFF' }}
               component="a"
               href="/"
-              label="Dashboard"
+              label="Bảng điều khiển"
               icon={<HomeIcon style={{ color: '#FFF' }} fontSize="small" />}
             />
             <Chip
               style={{ color: '#FFF' }}
               href="#"
-              label="Products"
+              label="Sản phẩm"
               icon={<ExpandMoreIcon />}
             />
           </Breadcrumbs>
         </div>
         <div className="row cardFilter mt-4">
           <div className="col-md-3">
-            <h4>SHOW BY</h4>
+            <h4>HIỂN THỊ THEO</h4>
             <Select
               value={formFields.category || ''}
               onChange={(e) => handleSelectChange(e, 'category')}
@@ -418,7 +418,7 @@ const Products = () => {
               className="w-100"
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Không có</em>
               </MenuItem>
               {loading ? (
                 <CircularProgress size={24} />

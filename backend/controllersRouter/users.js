@@ -5,6 +5,8 @@ import { Users } from "../models/users.js";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import pLimit from "p-limit";
+import { sendEmail } from "../utils/EmailService.js";
+import e from "express";
 
 const router = express.Router();
 
@@ -52,7 +54,6 @@ const uploadImages = async (images) => {
   return uploadStatus;
 };
 
-// Route to upload images locally, then upload to Cloudinary
 router.post("/upload", upload.array("images"), async (req, res) => {
   const uploadedFiles = req.files.map((file) => file.filename);
   const cloudinaryUploadResults = await uploadImages(req.files);
@@ -86,41 +87,64 @@ router.get("/get/count", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { name, phone, email, password } = req.body;
-
-  if (!name || !phone || !email || !password) {
-    return res
-      .status(400)
-      .json({ status: false, msg: "Không được để trống các trường!" });
-  }
-
+  const { name, phone, email, password, isAdmin } = req.body;
   try {
-    const existingEmail = await Users.findOne({ email });
-    if (existingEmail) {
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+    let user;
+    const existingUser = await Users.findOne({ email: email });
+    const existingPhone = await Users.findOne({ phone: phone });
+    if (existingUser) {
       return res.status(400).json({ status: false, msg: "Email đã tồn tại!" });
     }
 
-    const existingPhone = await Users.findOne({ phone });
     if (existingPhone) {
       return res
         .status(400)
         .json({ status: false, msg: "Số điện thoại đã tồn tại!" });
     }
-
-    const hashPassword = await bcrypt.hash(password, 10);
-    const result = await Users.create({
-      name,
-      phone,
+    if (existingUser) {
+      const hashPassword = await bcrypt.hash(password, 10);
+      existingUser.password = hashPassword;
+      existingUser.otp = verifyCode;
+      existingUser.otpExpired = Date.now() + 600000;
+      await existingUser.save();
+      user = existingUser;
+    } else {
+      const hashPassword = await bcrypt.hash(password, 10);
+      user = await Users.create({
+        name,
+        phone,
+        email,
+        password: hashPassword,
+        otp: verifyCode,
+        otpExpired: Date.now() + 600000,
+        isAdmin,
+      });
+      await user.save();
+    }
+    const resp = await sendEmailFun(
       email,
-      password: hashPassword,
-    });
+      "Verify Email",
+      "",
+      "Your OTP is " + verifyCode
+    );
 
     const token = jwt.sign(
-      { email: result.email, id: result._id },
+      {
+        email: user.email,
+        id: user._id,
+      },
       process.env.JSON_WEB_TOKEN_SECRET_KEY
     );
 
-    res.status(201).json({ status: true, user: result, token });
+    return res
+      .status(201)
+      .json({
+        status: true,
+        userId: user._id,
+        token,
+        msg: "OTP đã được gửi đến email của bạn.",
+      });
   } catch (error) {
     console.error("Error during signup:", error.message, error.stack);
     res
@@ -129,8 +153,39 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+const sendEmailFun = async (to, subject, text, html) => {
+  const result = await sendEmail(to, subject, text, html);
+  if(result.success) {
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+router.post("/verify", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    const user = await Users.findOne({ email:email });
+    if(!user) {
+      return res.status(404).json({ status: false, msg: "User not found" });
+    }
+    const isCodeValid = user.otp === otp
+    const isNotExpired = user.otpExpired > Date.now();
+    if(isCodeValid && isNotExpired) {
+      user.isVerified = true;
+      user.otp = null;
+      user.otpExpired = null;
+      await user.save();
+      return res.status(200).json({ status: true, msg: "OTP đã được xác thực" });
+    }
+  } catch (error) {
+    
+  }
+});
+
 router.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, isAdmin } = req.body; // Add isAdmin to the request body
   try {
     // Tìm người dùng theo email
     const existingUser = await Users.findOne({ email });
@@ -150,6 +205,21 @@ router.post("/signin", async (req, res) => {
       });
     }
 
+    // Check if the user is an admin and restrict access based on isAdmin flag
+    if (isAdmin && !existingUser.isAdmin) {
+      return res.status(403).json({
+        status: false,
+        msg: "Bạn không có quyền truy cập trang quản trị.",
+      });
+    }
+
+    if (!isAdmin && existingUser.isAdmin) {
+      return res.status(403).json({
+        status: false,
+        msg: "Bạn không có quyền truy cập trang giao diện.",
+      });
+    }
+
     // Tạo token JWT
     const token = jwt.sign(
       { email: existingUser.email, id: existingUser._id },
@@ -162,10 +232,10 @@ router.post("/signin", async (req, res) => {
       user: {
         name: existingUser.name,
         email: existingUser.email,
-        _id: existingUser._id, 
+        _id: existingUser._id,
       },
       token,
-      msg: "Đăng nhập thành công.",
+      msg: isAdmin ? "Đăng nhập quản trị thành công." : "Đăng nhập giao diện thành công.",
     });
   } catch (error) {
     console.error("Lỗi server:", error);
@@ -261,6 +331,5 @@ router.post("/authWithGoogle", async (req, res) => {
     });
   }
 });
-
 
 export default router;

@@ -5,7 +5,7 @@ const SearchBox = () => {
   return (
     <div className="searchBox posotion-relative d-flex align-items-center">
       <IoSearch className='mr-2' />
-      <input className='w-100' type="text" placeholder="Search here..." />
+      <input className='w-100' type="text" placeholder="Tìm kiếm..." />
     </div>
   );
 }
