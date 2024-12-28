@@ -56,7 +56,7 @@ const SignUp = () => {
           error: false,
           msg: res.msg,
         });
-
+        localStorage.setItem("userEmail", email);
         navigate('/verify-otp', { state: { userId: res.userId } });
       } else {
         context.setAlertBox({
