@@ -249,8 +249,8 @@ const Products = () => {
       formData.append('name', formFields.name?.trim() || '');
       formData.append('description', formFields.description?.trim() || '');
       formData.append('brand', formFields.brand?.trim() || '');
-      formData.append('price', Number(updatedPrice) || 0); 
-      formData.append('oldPrice', Number(formFields.oldPrice) || 0);
+      formData.append('price', `${Number(updatedPrice) || 0} VND`);
+      formData.append('oldPrice', `${Number(formFields.oldPrice) || 0} VND`);
       formData.append('category', formFields.category?.trim() || '');
       formData.append('subCat', formFields.subCat?.trim() || '');
       formData.append('catName', formFields.catName || '');

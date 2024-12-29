@@ -5,26 +5,20 @@ const router = express.Router();
 // GET endpoint to fetch orders for a specific user
 router.get('/', async (req, res) => {
   try {
-    const userId = req.query.userId; // Lấy userId từ query parameters
     const page = parseInt(req.query.page) || 1;
     const perPage = 8;
 
-    // Kiểm tra xem userId có được cung cấp không
-    if (!userId) {
-      return res.status(400).json({ msg: 'userId is required' });
-    }
-
-    // Tính tổng số đơn hàng cho userId cụ thể
-    const totalPosts = await Orders.countDocuments({ userId: userId });
+    // Tính tổng số đơn hàng
+    const totalPosts = await Orders.countDocuments();
     const totalPages = Math.ceil(totalPosts / perPage);
 
     // Kiểm tra xem trang yêu cầu có hợp lệ không
     if (page > totalPages) {
-      return res.status(404).json({ msg: 'No orders found for this user' });
+      return res.status(404).json({ msg: 'No orders found' });
     }
 
-    // Lấy các đơn hàng cho userId cụ thể
-    const orders = await Orders.find({ userId: userId })
+    // Lấy tất cả các đơn hàng
+    const orders = await Orders.find()
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();

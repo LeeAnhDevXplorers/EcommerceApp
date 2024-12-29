@@ -62,14 +62,21 @@ router.get('/', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const perPage = 20;
-    const totalPosts = await Category.countDocuments();
+    const categoryId = req.query.categoryId; // Get categoryId from query parameters
+
+    const filter = {};
+    if (categoryId) {
+      filter.category = categoryId; // Add category filter if categoryId is provided
+    }
+
+    const totalPosts = await Category.countDocuments(filter);
     const totalPages = Math.ceil(totalPosts / perPage);
 
     if (page > totalPages) {
       return res.status(404).json({ message: 'Không tìm thấy trang' });
     }
 
-    const categoryList = await Category.find()
+    const categoryList = await Category.find(filter)
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();

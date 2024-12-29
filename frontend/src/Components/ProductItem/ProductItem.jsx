@@ -16,7 +16,7 @@ const ProductItem = (props) => {
     });
   };
   const formatPrice = (price) => {
-    return price ? parseInt(price).toString() : '0';
+    return price ? `${parseInt(price).toString()} VND` : '0 VND';
   };
   return (
     <>
@@ -54,10 +54,10 @@ const ProductItem = (props) => {
           />
           <div className="d-flex align-items-center justify-content-end">
             <span className="oldPrice">
-              ${formatPrice(props.item?.oldPrice)}
+              {formatPrice(props.item?.oldPrice)}
             </span>
             <span className="netPrice text-danger ml-2">
-              ${formatPrice(props.item?.price)}
+              {formatPrice(props.item?.price)}
             </span>
           </div>
         </div>

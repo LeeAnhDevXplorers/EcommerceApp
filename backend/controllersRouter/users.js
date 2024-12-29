@@ -185,7 +185,7 @@ router.post("/verify", async (req, res) => {
 });
 
 router.post("/signin", async (req, res) => {
-  const { email, password, isAdmin } = req.body; // Add isAdmin to the request body
+  const { email, password, isAdmin } = req.body; 
   try {
     // Tìm người dùng theo email
     const existingUser = await Users.findOne({ email });
@@ -196,7 +196,6 @@ router.post("/signin", async (req, res) => {
       });
     }
 
-    // Kiểm tra mật khẩu
     const matchPassword = await bcrypt.compare(password, existingUser.password);
     if (!matchPassword) {
       return res.status(401).json({
@@ -205,7 +204,6 @@ router.post("/signin", async (req, res) => {
       });
     }
 
-    // Check if the user is an admin and restrict access based on isAdmin flag
     if (isAdmin && !existingUser.isAdmin) {
       return res.status(403).json({
         status: false,
@@ -220,13 +218,11 @@ router.post("/signin", async (req, res) => {
       });
     }
 
-    // Tạo token JWT
     const token = jwt.sign(
       { email: existingUser.email, id: existingUser._id },
       process.env.JSON_WEB_TOKEN_SECRET_KEY
     );
 
-    // Phản hồi thành công
     res.status(200).json({
       status: true,
       user: {

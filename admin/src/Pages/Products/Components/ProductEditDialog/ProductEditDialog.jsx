@@ -77,25 +77,48 @@ const ProductEditDialog = ({
 
   
   useEffect(() => {
-    setLoading(true);
-    context.setSelectedCountry;
-    ("");
-    fetchDataFromApi("/api/category")
-      .then((res) => {
-        if (Array.isArray(res.categoryList)) {
-          setCatData(res.categoryList);
-        } else {
+      setLoading(true);
+      fetchDataFromApi("/api/category")
+        .then((res) => {
+          if (Array.isArray(res.categoryList)) {
+            setCatData(res.categoryList);
+          } else {
+            setCatData([]);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching categories:", error);
           setCatData([]);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, []);
+  
+  
+  
+    useEffect(() => {
+      const fetchSubCategories = async () => {
+        setLoading(true);
+        try {
+          const response = await fetchDataFromApi(`/api/subCategory?categoryId=${formFields.category}`);
+          if (Array.isArray(response.data)) {
+            setSubCategories(response.data);
+          } else {
+            setSubCategories([]);
+          }
+        } catch (error) {
+          console.error("Lỗi khi lấy subCategories:", error);
+          setSubCategories([]);
+        } finally {
+          setLoading(false);
         }
-      })
-      .catch((error) => {
-        console.error("Lỗi khi lấy danh mục:", error);
-        setCatData([]);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+      };
+  
+      if (formFields.category) {
+        fetchSubCategories();
+      }
+    }, [formFields.category]);
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
@@ -116,25 +139,6 @@ const ProductEditDialog = ({
     };
 
     fetchAllData();
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    fetchDataFromApi("/api/subCategory")
-      .then((res) => {
-        if (Array.isArray(res.data)) {
-          setsubCatData(res.data);
-        } else {
-          setsubCatData([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Lỗi khi lấy danh mục:", error);
-        setsubCatData([]);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
   }, []);
 
   return (

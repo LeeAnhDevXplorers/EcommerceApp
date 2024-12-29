@@ -6,7 +6,14 @@ router.get('/', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const perPage = req.query.perPage;
-    const totalPosts = await SubCategory.countDocuments();
+    const categoryId = req.query.categoryId; // Get categoryId from query parameters
+
+    const filter = {};
+    if (categoryId) {
+      filter.category = categoryId; // Add category filter if categoryId is provided
+    }
+
+    const totalPosts = await SubCategory.countDocuments(filter);
     const totalPages = Math.ceil(totalPosts / perPage);
 
     if (page > totalPages) {
@@ -15,15 +22,15 @@ router.get('/', async (req, res) => {
     let subCat = [];
 
     if (req.query.page !== undefined && req.query.perPage !== undefined) {
-      subCat = await SubCategory.find()
+      subCat = await SubCategory.find(filter)
         .populate('category subCat')
         .skip((page - 1) * perPage)
         .limit(perPage)
         .exec();
     } else {
-      subCat = await SubCategory.find().populate('category subCat');
+      subCat = await SubCategory.find(filter).populate('category subCat');
     }
-    subCat = await SubCategory.find().populate('category subCat');
+
     if (subCat.length === 0) {
       return res
         .status(404)

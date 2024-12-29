@@ -139,7 +139,7 @@ const Listing = (props) => {
                     <ProductItem
                       key={index}
                       itemView={productView}
-                      item={item}
+                      item={{ ...item, price: `${item.price} VND`, oldPrice: `${item.oldPrice} VND` }}
                     />
                   );
                 })}

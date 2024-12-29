@@ -38,7 +38,7 @@ const SignUp = () => {
   const signUp = async (e) => {
     e.preventDefault();
 
-    const { name, phone, email, password, confirmPassword, isAdmin } = formFields;
+    const { name, phone, email, password, confirmPassword } = formFields;
     if (
       [name, phone, email, password, confirmPassword].some(
         (field) => field.trim() === ''
@@ -51,6 +51,8 @@ const SignUp = () => {
       });
       return;
     }
+
+    // Kiểm tra mật khẩu khớp
     if (password !== confirmPassword) {
       context.setAlertBox({
         open: true,
@@ -66,24 +68,36 @@ const SignUp = () => {
         phone,
         email,
         password,
-        isAdmin
-      });
+      }).then((res) => {
+        if(res.status === 200){
+          localStorage.setItem("userEmail", formFields.email)
+          setTimeout(() => {
+            navigate("/verify-otp")
+          }, 1000);
+        }else{
+          context.setAlertBox({
+            open: true,
+            error: true,
+            msg: res.msg,
+          });
+        }
+      })
 
-      if (res.status) {
-        context.setAlertBox({
-          open: true,
-          error: false,
-          msg: 'Đăng ký thành công!',
-        });
-        localStorage.setItem("userEmail", email);
-        navigate('/verify-otp');
-      } else {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: res.msg,
-        });
-      }
+      // if (res.status) {
+      //   context.setAlertBox({
+      //     open: true,
+      //     error: false,
+      //     msg: 'Đăng ký thành công!',
+      //   });
+
+      //   navigate('/login');
+      // } else {
+      //   context.setAlertBox({
+      //     open: true,
+      //     error: true,
+      //     msg: res.msg,
+      //   });
+      // }
     } catch (error) {
       console.error('Đăng ký thất bại:', error);
 
@@ -94,6 +108,7 @@ const SignUp = () => {
       });
     }
   };
+
   return (
     <>
       <div className="container1">

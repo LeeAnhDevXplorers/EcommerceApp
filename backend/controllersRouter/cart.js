@@ -30,12 +30,12 @@ router.post('/add', async (req, res) => {
 
   try {
     // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
-    const existingCartItem = await Cart.findOne({ productId });
+    const existingCartItem = await Cart.findOne({ productId, userId });
 
     if (existingCartItem) {
       return res.status(409).json({
-        status: false,
-        msg: 'Product already added in the cart',
+        success: false,
+        message: 'Product already added in the cart',
       });
     }
 
@@ -54,14 +54,15 @@ router.post('/add', async (req, res) => {
     const savedCartItem = await newCartItem.save();
 
     return res.status(201).json({
+      success: true,
       message: 'Product added to cart successfully',
       cartItem: savedCartItem,
-      success: true,
     });
   } catch (err) {
     return res.status(500).json({
-      error: err.message || 'Internal server error',
       success: false,
+      message: 'Internal server error',
+      error: err.message,
     });
   }
 });

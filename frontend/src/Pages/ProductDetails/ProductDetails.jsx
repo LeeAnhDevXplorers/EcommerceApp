@@ -181,9 +181,9 @@ const ProductDetails = (props) => {
                 </li>
               </ul>
               <div className="d-flex align-items-center price mb-3">
-                <span className="block oldPrice">${productData?.oldPrice}</span>
+                <span className="block oldPrice">{productData?.price} VND</span>
                 <span className="block netPrice text-danger ml-3">
-                  ${productData?.price}
+                  {productData?.oldPrice} VND
                 </span>
               </div>
               <div className="badge badge-success">CÓ SẴN</div>

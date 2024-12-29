@@ -7,14 +7,14 @@ import { postData } from "../../utils/api";
 const VerifyOTP = () => {
   const [otp, setOtp] = useState(Array(6).fill(""));
   const context = useContext(MyContext);
+  const location = useLocation();
   const navigate = useNavigate();
+  const { userId } = location.state;
 
-useEffect(() => {
-    context.setisHide(false);
-    return () => {
-      context.setisHide(true);
-    };
-  }, [context]);
+  useEffect(() => {
+    context.setisHeaderFooterShow(false);
+  }, [context]); // Add dependency array
+
   const handleChange = (value, index) => {
     if (!/^\d*$/.test(value)) return;
     const newOtp = [...otp];
@@ -35,10 +35,9 @@ useEffect(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const otpCode = otp.join("");
-    const email = localStorage.getItem("userEmail");
 
     try {
-      const res = await postData('/api/user/verify', { email, otp: otpCode });
+      const res = await postData('/api/user/verify', { userId, otp: otpCode });
 
       if (res.status) {
         context.setAlertBox({

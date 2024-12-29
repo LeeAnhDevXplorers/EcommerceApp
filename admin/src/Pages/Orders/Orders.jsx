@@ -11,6 +11,7 @@ import { emphasize, styled } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchDataFromApi } from "../../utils/api";
+
 // Styled Component
 const StyleBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -31,27 +32,25 @@ const StyleBreadcrumb = styled(Chip)(({ theme }) => {
     },
   };
 });
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [productOrders, setProductOrders] = useState([]);
   const [page, setPage] = useState(1);
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
 
-    fetchDataFromApi(`/api/orders?page=1&perPage=8&userId=${user.userId}`).then(
-      (res) => {
-        setOrders(res);
-      }
-    );
+  useEffect(() => {
+    fetchDataFromApi(`/api/orders?page=1&perPage=8`).then((res) => {
+      setOrders(res);
+    });
   }, []);
 
   const handchangePage = (value) => {
@@ -62,13 +61,12 @@ const Orders = () => {
   };
 
   const showProductOrder = (id) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
     fetchDataFromApi(`/api/orders/${id}`).then((res) => {
       setOpen(true);
       setProductOrders(res.products);
     });
   };
+
   return (
     <div className="right-content w-100">
       <div className="card shadow border-0 p-3 mt-4 w-100">
@@ -125,7 +123,7 @@ const Orders = () => {
                   <td>{item?.phoneNumber}</td>
                   <td>{item?.address}</td>
                   <td>{item?.pincode}</td>
-                  <td>{item?.amount}</td>
+                  <td>{item?.amount} VND</td>
                   <td>{item?.email}</td>
                   <td>{item?.userId}</td>
                   <td>
@@ -188,8 +186,8 @@ const Orders = () => {
                           </div>
                         </td>
                         <td>{item?.quantity}</td>
-                        <td>{item?.price}</td>
-                        <td>{item?.subTotal}</td>
+                        <td>{item?.price} VND</td>
+                        <td>{item?.subTotal} VND</td>
                       </tr>
                     );
                   })}
@@ -202,6 +200,7 @@ const Orders = () => {
     </div>
   );
 };
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -210,4 +209,5 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
+
 export default Orders;

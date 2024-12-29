@@ -8,6 +8,7 @@ import { ProductWeigth } from "../models/productWeigths.js";
 import { Products } from "../models/products.js";
 import { ProductRams } from "../models/productsRams.js";
 import { ProductSize } from "../models/productsSize.js";
+import { ProductReviews } from "../models/productReviews.js";
 
 cloudinary.config({
   cloud_name: process.env.cloudinary_Config_Cloud_Name,
@@ -21,7 +22,7 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads");
   },
-  filename: function (req, file, cb) {
+  filename: function (req, file, cb) {  
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, file.fieldname + "-" + uniqueSuffix + "-" + file.originalname);
   },
@@ -67,10 +68,11 @@ router.get("/", async (req, res) => {
     const perPage = parseInt(req.query.perPage) || 5;
 
     const filter = {};
-    const { subName, catName, minPrice, maxPrice, location } = req.query;
+    const { subName, catName, minPrice, maxPrice, location, subCatId } = req.query;
 
     if (subName) filter.subName = subName;
     if (catName) filter.catName = catName;
+    if (subCatId) filter.subCat = subCatId; // Filter by subcategory if provided
 
     if (minPrice) filter.price = { ...filter.price, $gte: parseInt(minPrice) };
     if (maxPrice) filter.price = { ...filter.price, $lte: parseInt(maxPrice) };
@@ -148,6 +150,39 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Đã xảy ra lỗi khi lấy thông tin sản phẩm",
+      error: error.message,
+    });
+  }
+});
+
+router.get("/:id/ratings-comments", async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "ID không hợp lệ." });
+    }
+
+    const product = await Products.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+    }
+
+    const reviews = await ProductReviews.find({ productId: id });
+    const totalReviews = reviews.length;
+    const totalStars = reviews.reduce((acc, review) => acc + review.customerRating, 0);
+
+    const starPercentage = totalReviews ? (totalStars / (totalReviews * 5)) * 100 : 0;
+    const commentPercentage = totalReviews ? (totalReviews / totalReviews) * 100 : 0;
+
+    res.status(200).json({
+      starPercentage,
+      commentPercentage,
+      totalReviews,
+      totalStars,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Đã xảy ra lỗi khi tính toán đánh giá và bình luận",
       error: error.message,
     });
   }

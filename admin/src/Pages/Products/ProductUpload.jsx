@@ -99,25 +99,6 @@ const ProductUpload = () => {
   }, [context.selectedCountry]);
 
   useEffect(() => {
-    setLoading(true);
-    fetchDataFromApi("/api/category")
-      .then((res) => {
-        if (Array.isArray(res.categoryList)) {
-          setCatData(res.categoryList);
-        } else {
-          setCatData([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Lỗi khi lấy danh mục:", error);
-        setCatData([]);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
       try {
@@ -138,6 +119,27 @@ const ProductUpload = () => {
 
     fetchAllData();
   }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchDataFromApi("/api/category")
+      .then((res) => {
+        if (Array.isArray(res.categoryList)) {
+          setCatData(res.categoryList);
+        } else {
+          setCatData([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+        setCatData([]);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+
 
   useEffect(() => {
     const fetchSubCategories = async () => {

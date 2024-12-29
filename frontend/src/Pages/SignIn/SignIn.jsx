@@ -100,7 +100,7 @@ const signInGoogle = () => {
     e.preventDefault();
     setLoading(true);
 
-    try {
+    try { 
       const response = await postData("/api/user/signin", formFields);
 
       if (response.status) {

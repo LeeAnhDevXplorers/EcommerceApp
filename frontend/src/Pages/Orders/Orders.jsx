@@ -93,15 +93,13 @@ const Orders = () => {
                     <td>{item?.email}</td>
                     <td>{item?.userId}</td>
                     <td>
-                      {item?.status === "Chờ xác nhận" ? (
-                        <span className="badge badge-danger">
-                          {item?.status}
-                        </span>
-                      ) : (
-                        <span className="badge badge-success">
-                          {item?.status}
-                        </span>
-                      )}
+                    {item?.status === "Chờ xác nhận" ? (
+                      <span className="badge badge-danger">{item?.status}</span>
+                    ) : (
+                      <span className="badge badge-success">
+                        {item?.status}
+                      </span>
+                    )}
                     </td>
                     <td>{item?.date}</td>
                   </tr>

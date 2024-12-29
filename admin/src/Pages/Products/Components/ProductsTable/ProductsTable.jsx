@@ -32,7 +32,7 @@ const ProductsTable = ({
         <tbody>
           {productList?.length > 0 ? (
             productList?.map((item, index) => {
-                const formattedPrice = parseFloat(item.price).toFixed(3);
+              const formattedPrice = `${item.price.toLocaleString('vi-VN')} VND`;
               return (
                 <tr key={item._id || index}>
                   <td>#{index + 1}</td>
@@ -60,7 +60,7 @@ const ProductsTable = ({
                   <td>{item.subCat?.subCat}</td>
                   <td>{item.brand}</td>
                   <td>
-                    <del className="old tex">{item.oldPrice}</del>
+                    <del className="old tex">{item.oldPrice} VND</del>
                     <span className="new text-danger">{formattedPrice}</span>
                   </td>
                   <td>{item.countInStock}</td>
