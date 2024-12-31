@@ -32,75 +32,75 @@ const SignIn = () => {
     }));
   };
 
-const signInGoogle = () => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user;
+  const signInGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
 
-      const fields = {
-        name: user.providerData[0].displayName,
-        email: user.providerData[0].email,
-        password: null,
-        images: user.providerData[0].photoURL,
-        phone: user.providerData[0].phoneNumber,
-      };
+        const fields = {
+          name: user.providerData[0].displayName,
+          email: user.providerData[0].email,
+          password: null,
+          images: user.providerData[0].photoURL,
+          phone: user.providerData[0].phoneNumber,
+        };
 
-      postData(`/api/users/authWithGoogle`, fields).then((response) => {
-        try {
-          if (response.status) {
-            localStorage.setItem("token", response.token);
+        postData(`/api/users/authWithGoogle`, fields).then((response) => {
+          try {
+            if (response.status) {
+              localStorage.setItem("token", response.token);
 
-            const user = {  
-              name: response.user?.name || "",
-              email: response.user?.email || "",
-              userId: response.user?._id || "",
-            };
-            localStorage.setItem("user", JSON.stringify(user));
+              const user = {
+                name: response.user?.name || "",
+                email: response.user?.email || "",
+                userId: response.user?._id || "",
+              };
+              localStorage.setItem("user", JSON.stringify(user));
 
-            context.setAlertBox({
-              open: true,
-              error: false,
-              msg: response.msg || "Đăng nhập thành công.",
-            });
+              context.setAlertBox({
+                open: true,
+                error: false,
+                msg: response.msg || "Đăng nhập thành công.",
+              });
 
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 1000);
-          } else {
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 1000);
+            } else {
+              context.setAlertBox({
+                open: true,
+                error: true,
+                msg: response.msg || "Đăng nhập thất bại.",
+              });
+            }
+          } catch (error) {
             context.setAlertBox({
               open: true,
               error: true,
-              msg: response.msg || "Đăng nhập thất bại.",
+              msg: "Error processing response.",
+              errorMsg: error.message,
             });
           }
-        } catch (error) {
-          context.setAlertBox({
-            open: true,
-            error: true,
-            msg: "Error processing response.",
-            errorMsg: error.message,
-          });
-        }
+        });
+      })
+      .catch((error) => {
+        console.error("Error during sign in:", error);
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: "Sign in failed.",
+          errorMsg: error.message,
+        });
       });
-    })
-    .catch((error) => {
-      console.error("Error during sign in:", error);
-      context.setAlertBox({
-        open: true,
-        error: true,
-        msg: "Sign in failed.",
-        errorMsg: error.message,
-      });
-    });
-};
+  };
 
   const signIn = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    try { 
+    try {
       const response = await postData("/api/user/signin", formFields);
 
       if (response.status) {
@@ -139,6 +139,45 @@ const signInGoogle = () => {
       setLoading(false);
     }
   };
+
+  const forgotPass = () => {
+    if (formFields.email === "") {
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Vui lòng nhập email của bạn.",
+      });
+    } else {
+      localStorage.setItem("userEmail", formFields.email);
+      localStorage.setItem("actionType", "forgotPass");
+      postData("/api/user/forgotPass", { email: formFields.email })
+        .then((res) => {
+          if (res.status) {
+            context.setAlertBox({
+              open: true,
+              error: false,
+              msg: res.msg || "Mã OTP đã được gửi đến email của bạn.",
+            });
+            window.location.href = "/verify-otp";
+          } else {
+            context.setAlertBox({
+              open: true,
+              error: true,
+              msg: res.msg || "Gửi mã OTP thất bại.",
+            });
+          }
+        })
+        .catch((error) => {
+          context.setAlertBox({
+            open: true,
+            error: true,
+            msg: "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+            errorMsg: error.message,
+          });
+        });
+    }
+  };
+
   return (
     <div>
       <section className="section signInPage">
@@ -188,13 +227,15 @@ const signInGoogle = () => {
                   onChange={onchangeInput}
                 />
               </div>
-              <a className="border-effect cursor">Quên mật khẩu? </a>
+              <a className="border-effect cursor" onClick={forgotPass}>
+                Quên mật khẩu?{" "}
+              </a>
               <div className="d-flex align-items-center mt-3 mb-3 row">
                 <Button
                   type="submit"
                   className="btn col btn-blue btn-lg btn-big"
                 >
-                 Đăng nhập
+                  Đăng nhập
                 </Button>
                 <Link to={"/"}>
                   <Button
@@ -213,7 +254,7 @@ const signInGoogle = () => {
                 </Link>
               </p>
               <h4 className="social  text-center font-weight-bold mt-5">
-               Hoặc tiếp tục với tài khoản xã hội
+                Hoặc tiếp tục với tài khoản xã hội
               </h4>
               <div className="form-btn">
                 <Button className="logoBtn" onClick={signInGoogle}>

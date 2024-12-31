@@ -20,6 +20,7 @@ import Orders from './Pages/Orders/Orders';
 import Search from './Pages/Listing/Listing';
 import MyAccount from './Pages/MyAccount/MyAccount';
 import VerifyOTP from './Pages/OTP/VerifyOTP';
+import ChangePassword from './Pages/ChangePassword/ChangePassword';
 
 const MyContext = createContext();
 
@@ -207,6 +208,7 @@ const App = () => {
           <Route path="/search" exact={true} element={<Search />} />
           <Route path="/my-account" exact={true} element={<MyAccount />} />
           <Route path="/verify-otp" exact={true} element={<VerifyOTP />} />
+          <Route path="/changePassword" exact={true} element={<ChangePassword />} />
         </Routes>
         {isHeaderFooterShow === true && <Footer />}
 

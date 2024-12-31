@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { postData } from "../../utils/api";
 
 const VerifyOTP = () => {
-  const [otp, setOtp] = useState(Array(6).fill(""));
+  const [otp, setOtp] = useState(Array(6).fill("")); // Add this line
   const context = useContext(MyContext);
   const navigate = useNavigate();
   useEffect(() => {
@@ -32,18 +32,23 @@ const VerifyOTP = () => {
     e.preventDefault();
     const otpCode = otp.join("");
     const email = localStorage.getItem("userEmail");
+    const actionType = localStorage.getItem("actionType");
 
-    try {
-      const res = await postData('/api/user/verify', { email, otp: otpCode });
+    if (otpCode) {
+      const res = await postData("/api/user/verify", { email, otp: otpCode });
 
       if (res.status) {
         context.setAlertBox({
           open: true,
           error: false,
-          msg: 'Xác thực thành công!',
+          msg: "Xác thực thành công!",
         });
-
-        navigate('/signIn'); // Redirect to sign-in page after successful verification
+        if (actionType !== "forgotPass") {
+          localStorage.removeItem("userEmail");
+          navigate("/signIn");
+        } else {
+          navigate("/changePassword");
+        }
       } else {
         context.setAlertBox({
           open: true,
@@ -51,13 +56,10 @@ const VerifyOTP = () => {
           msg: res.msg,
         });
       }
-    } catch (error) {
-      console.error('Xác thực OTP thất bại:', error);
-
+    } else {
       context.setAlertBox({
         open: true,
-        error: true,
-        msg: error.response?.data?.msg || 'Có lỗi xảy ra, vui lòng thử lại!',
+        msg: "Vui lòng nhập mã OTP.",
       });
     }
   };

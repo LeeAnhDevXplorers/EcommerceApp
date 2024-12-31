@@ -328,4 +328,67 @@ router.post("/authWithGoogle", async (req, res) => {
   }
 });
 
+
+router.post("/forgotPass", async (req, res) => {
+  const {email } = req.body;
+  try {
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+    let user;
+    const existingUser = await Users.findOne({ email: email });
+    if (!existingUser) {
+      return res.status(400).json({ status: false, msg: "Email không tồn tại!" });
+    }
+    if (existingUser) {
+      existingUser.otp = verifyCode;
+      existingUser.otpExpired = Date.now() + 600000;
+      await existingUser.save();
+    }
+    const resp = await sendEmailFun(
+      email,
+      "Verify Email",
+      "",
+      "Your OTP is " + verifyCode
+    );
+
+    return res
+      .status(201)
+      .json({
+        status: true,
+        msg: "OTP đã được gửi đến email của bạn.",
+      });
+  } catch (error) {
+    console.error("Error during signup:", error.message, error.stack);
+    res
+      .status(500)
+      .json({ status: false, msg: "Có lỗi xảy ra, vui lòng thử lại!" });
+  }
+});
+
+
+router.post("/forgotPass/changePassword", async (req, res) => {
+  const { email, newPass } = req.body;
+  try {
+    const existingUser = await Users.findOne({ email: email });
+    if (!existingUser) {
+      return res.status(400).json({ status: false, msg: "Email không tồn tại!" });
+    }
+
+    const hashPassword = await bcrypt.hash(newPass, 10);
+    existingUser.password = hashPassword;
+    await existingUser.save();
+
+    return res.status(200).json({
+      status: true,
+      msg: "Mật khẩu đã được thay đổi thành công.",
+    });
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).json({ 
+      status: false, 
+      msg: "Có lỗi xảy ra, vui lòng thử lại!" 
+    });
+  }
+});
+
+
 export default router;
