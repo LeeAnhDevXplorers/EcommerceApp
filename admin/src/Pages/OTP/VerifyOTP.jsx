@@ -1,19 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
 import { IoShieldCheckmark } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { postData } from "../../utils/api";
 
 const VerifyOTP = () => {
   const [otp, setOtp] = useState(Array(6).fill(""));
   const context = useContext(MyContext);
-  const location = useLocation();
   const navigate = useNavigate();
-  const { userId } = location.state;
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    context.setisHeaderFooterShow(false);
-  }, [context]); // Add dependency array
+    const storedData = localStorage.getItem('tempUserData');
+    if (storedData) {
+      setUserData(JSON.parse(storedData));
+    }
+    context.setisHide(false);
+    return () => {
+      context.setisHide(true);
+    };
+  }, [context]);
 
   const handleChange = (value, index) => {
     if (!/^\d*$/.test(value)) return;
@@ -35,32 +41,53 @@ const VerifyOTP = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const otpCode = otp.join("");
+    const actionType = localStorage.getItem("actionType");
 
-    try {
-      const res = await postData('/api/user/verify', { userId, otp: otpCode });
-
-      if (res.status) {
-        context.setAlertBox({
-          open: true,
-          error: false,
-          msg: 'Xác thực thành công!',
-        });
-
-        navigate('/signIn'); // Redirect to sign-in page after successful verification
-      } else {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: res.msg,
-        });
-      }
-    } catch (error) {
-      console.error('Xác thực OTP thất bại:', error);
-
+    if (!userData?.email) {
       context.setAlertBox({
         open: true,
         error: true,
-        msg: error.response?.data?.msg || 'Có lỗi xảy ra, vui lòng thử lại!',
+        msg: "User data not found",
+      });
+      return;
+    }
+
+    if (otpCode) {
+      try {
+        const res = await postData("/api/user/verify", { 
+          email: userData.email, 
+          otp: otpCode 
+        });
+
+        if (res.status) {
+          context.setAlertBox({
+            open: true,
+            error: false,
+            msg: "Xác thực thành công!",
+          });
+          localStorage.removeItem('tempUserData');
+          localStorage.removeItem('actionType');
+          
+          navigate("/login");
+        } else {
+          context.setAlertBox({
+            open: true,
+            error: true,
+            msg: res.msg,
+          });
+        }
+      } catch (error) {
+        console.error('OTP verification failed:', error);
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: error.response?.data?.msg || 'An error occurred. Please try again!',
+        });
+      }
+    } else {
+      context.setAlertBox({
+        open: true,
+        msg: "Vui lòng nhập mã OTP.",
       });
     }
   };
@@ -71,7 +98,7 @@ const VerifyOTP = () => {
         <div className="otp-header">
           <IoShieldCheckmark className="otp-icon" />
           <h2 className="otp-title">OTP Verification</h2>
-          <p className="otp-title">Nhập mã OTP đã được gửi vào email của bạn</p>
+          <p className="otp-title">Enter the OTP code sent to your email</p>
         </div>
         <div className="otp-input-group">
           {otp.map((digit, index) => (
@@ -88,7 +115,7 @@ const VerifyOTP = () => {
           ))}
         </div>
         <button type="submit" className="otp-submit-button">
-          Xác nhận OTP
+          Verify OTP
         </button>
       </form>
     </div>

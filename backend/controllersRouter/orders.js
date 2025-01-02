@@ -59,12 +59,12 @@ router.post('/create', async (req, res) => {
       name: req.body.name,
       phoneNumber: req.body.phoneNumber,
       address: req.body.address,
-      pincode: req.body.pincode,
       amount: req.body.amount,
       paymentId: req.body.paymentId,
       email: req.body.email,
       userId: req.body.userId, // Đảm bảo trường này được gửi đầy đủ
       products: req.body.products,
+      status: req.body.status || "Chờ xác nhận",
     });
 
     // Lưu vào cơ sở dữ liệu
@@ -81,6 +81,21 @@ router.post('/create', async (req, res) => {
       message: 'Order creation failed.',
       error: err.message,
     });
+  }
+});
+
+// PUT endpoint to update order status
+router.put('/:id', async (req, res) => {
+  try {
+    const order = await Orders.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    order.status = req.body.status;
+    await order.save();
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating order status', error: error.message });
   }
 });
 

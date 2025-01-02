@@ -39,20 +39,26 @@ const Login = () => {
     try {
       const response = await postData('/api/user/signin', formFields);
 
-      if (response.status) {
+      if (response.status && response.user) {
+        // Store token
         localStorage.setItem('token', response.token);
 
-        const user = {
-          name: response.user?.name || '',
-          email: response.user?.email || '',
-          userId: response.user?._id || '',
+        // Store user data
+        const userData = {
+          name: response.user.name,
+          email: response.user.email,
+          userId: response.user._id,
+          role: response.user.isAdmin ? 'admin' : 'user',
+          lastLogin: new Date().toISOString()
         };
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(userData));
+
         context.setAlertBox({
           open: true,
           error: false,
-          msg: response.msg || (formFields.isAdmin ? 'Đăng nhập quản trị thành công.' : 'Đăng nhập giao diện thành công.'),
+          msg: response.msg || 'Đăng nhập thành công'
         });
+
         setTimeout(() => {
           window.location.href = '/';
         }, 1000);

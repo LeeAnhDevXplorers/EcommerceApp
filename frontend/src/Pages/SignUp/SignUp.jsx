@@ -33,7 +33,6 @@ const SignUp = () => {
 
     const { name, phone, email, password } = formFields;
 
-    // Kiểm tra các trường không được để trống
     if (
       [name, phone, email, password].some(
         (field) => field.trim() === ''

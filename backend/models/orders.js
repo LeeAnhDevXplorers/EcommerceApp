@@ -14,10 +14,6 @@ const ordersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    pincode: {
-      type: String,
-      required: true,
-    },
     amount: {
       type: String,
       required: true,
@@ -58,6 +54,7 @@ const ordersSchema = new mongoose.Schema(
     ],
     status: {
       type: String,
+      enum: ["Chờ xác nhận","Đã xác nhận", "Đang giao", "Hoàn thành"],
       default: "Chờ xác nhận"
     },
     date: {

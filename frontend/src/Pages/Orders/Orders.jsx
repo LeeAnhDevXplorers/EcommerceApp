@@ -71,7 +71,7 @@ const Orders = () => {
                   <th>Tổng tiền</th>
                   <th>Email</th>
                   <th>User Id</th>
-                  <th>Order status</th>
+                  <th>Trạng thái đơn hàng</th>
                   <th>Ngày mua</th>
                 </tr>
               </thead>
@@ -93,13 +93,15 @@ const Orders = () => {
                     <td>{item?.email}</td>
                     <td>{item?.userId}</td>
                     <td>
-                    {item?.status === "Chờ xác nhận" ? (
-                      <span className="badge badge-danger">{item?.status}</span>
-                    ) : (
-                      <span className="badge badge-success">
-                        {item?.status}
-                      </span>
-                    )}
+                      {item?.status === "Chờ xác nhận" ? (
+                        <span className="badge badge-danger">Chờ xác nhận</span>
+                      ) : item?.status === "Đang giao" ? (
+                        <span className="badge badge-warning">Đang giao</span>
+                      ) : item?.status === "Đã xác nhận" ? (
+                        <span className="badge badge-info">Đã xác nhận</span>
+                      ) : (
+                        <span className="badge badge-success">Hoàn thành</span>
+                      )}
                     </td>
                     <td>{item?.date}</td>
                   </tr>

@@ -37,13 +37,9 @@ const SignUp = () => {
 
   const signUp = async (e) => {
     e.preventDefault();
+    const { name, phone, email, password } = formFields;
 
-    const { name, phone, email, password, confirmPassword } = formFields;
-    if (
-      [name, phone, email, password, confirmPassword].some(
-        (field) => field.trim() === ''
-      )
-    ) {
+    if ([name, phone, email, password].some((field) => field.trim() === '')) {
       context.setAlertBox({
         open: true,
         error: true,
@@ -52,52 +48,31 @@ const SignUp = () => {
       return;
     }
 
-    // Kiểm tra mật khẩu khớp
-    if (password !== confirmPassword) {
-      context.setAlertBox({
-        open: true,
-        error: true,
-        msg: 'Mật khẩu không trùng khớp!',
-      });
-      return;
-    }
-
     try {
-      const res = await postData('/api/user/signup', {
-        name,
-        phone,
-        email,
-        password,
-      }).then((res) => {
-        if(res.status === 200){
-          localStorage.setItem("userEmail", formFields.email)
-          setTimeout(() => {
-            navigate("/verify-otp")
-          }, 1000);
-        }else{
-          context.setAlertBox({
-            open: true,
-            error: true,
-            msg: res.msg,
-          });
-        }
-      })
+      const res = await postData('/api/user/signup', formFields);
 
-      // if (res.status) {
-      //   context.setAlertBox({
-      //     open: true,
-      //     error: false,
-      //     msg: 'Đăng ký thành công!',
-      //   });
-
-      //   navigate('/login');
-      // } else {
-      //   context.setAlertBox({
-      //     open: true,
-      //     error: true,
-      //     msg: res.msg,
-      //   });
-      // }
+      if (res.status) {
+        context.setAlertBox({
+          open: true,
+          error: false,
+          msg: res.msg,
+        });
+        const userData = {
+          email,
+          name,
+          phone,
+          userId: res.userId
+        };
+        localStorage.setItem('tempUserData', JSON.stringify(userData));
+        localStorage.setItem('actionType', 'signup');
+        navigate('/verify-otp');
+      } else {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: res.msg,
+        });
+      }
     } catch (error) {
       console.error('Đăng ký thất bại:', error);
 

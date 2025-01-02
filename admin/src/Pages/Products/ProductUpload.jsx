@@ -68,7 +68,7 @@ const ProductUpload = () => {
   const context = useContext(MyContext);
   const [catData, setCatData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [subCategories, setSubCategories] = useState([]); 
+  const [subCategories, setSubCategories] = useState([]);
   const [subCatVal, setSubCatVal] = useState();
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
@@ -139,31 +139,6 @@ const ProductUpload = () => {
       });
   }, []);
 
-
-
-  useEffect(() => {
-    const fetchSubCategories = async () => {
-      setLoading(true);
-      try {
-        await fetchDataFromApi("/api/subCategory").then((res) => {
-     
-          if (Array.isArray(res.data)) {
-            setSubCategories(res.data);
-          } else {
-            setSubCategories([]);
-          }
-        });
-      } catch (error) {
-        console.error("Lỗi khi lấy subCategories:", error);
-        setSubCategories([]); 
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSubCategories(); 
-  }, []); 
-
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormFields((prev) => ({
@@ -230,6 +205,27 @@ const removeFile = async (url) => {
       ...prev,
       [fieldName]: e.target.value,
     }));
+
+    if (fieldName === "category") {
+      fetchSubCategoriesByCategory(e.target.value);
+    }
+  };
+
+  const fetchSubCategoriesByCategory = async (categoryId) => {
+    setLoading(true);
+    try {
+      const res = await fetchDataFromApi(`/api/subCategory?categoryId=${categoryId}`);
+      if (Array.isArray(res.data)) {
+        setSubCategories(res.data);
+      } else {
+        setSubCategories([]);
+      }
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+      setSubCategories([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectSubCatChange = (e) => {

@@ -66,7 +66,7 @@ const ProductEditDialog = ({
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [catData, setCatData] = useState([]);
-  const [subCatData, setsubCatData] = useState([]);
+  const [subCatData, setSubCatData] = useState([]);
   const [pRamData, setPRamData] = useState([]);
   const [pWeigthData, setPWeigthData] = useState([]);
   const [pSizeData, setPSizeData] = useState([]);
@@ -101,15 +101,15 @@ const ProductEditDialog = ({
       const fetchSubCategories = async () => {
         setLoading(true);
         try {
-          const response = await fetchDataFromApi(`/api/subCategory?categoryId=${formFields.category}`);
-          if (Array.isArray(response.data)) {
-            setSubCategories(response.data);
+          const res = await fetchDataFromApi(`/api/subCategory?categoryId=${formFields.category}`);
+          if (Array.isArray(res.data)) {
+            setSubCatData(res.data);
           } else {
-            setSubCategories([]);
+            setSubCatData([]);
           }
         } catch (error) {
-          console.error("Lỗi khi lấy subCategories:", error);
-          setSubCategories([]);
+          console.error("Error fetching subcategories:", error);
+          setSubCatData([]);
         } finally {
           setLoading(false);
         }

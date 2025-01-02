@@ -15,7 +15,7 @@ import { fetchDataFromApi } from "../../utils/api";
 import "./Listing.css";
 import { MyContext } from "../../App";
 
-const Listing = (props) => {
+const Listing = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [productData, setProductData] = useState([]);
   const [productView, setProductView] = useState("four");
@@ -30,10 +30,10 @@ const Listing = (props) => {
     setAnchorEl(null);
   };
 
-  const { id } = useParams();
+  useParams();
 
   useEffect(() => {
-    // Kiểm tra dữ liệu từ context
+    // Check data from context
     console.log(context.searchData);
     setProductData(context.searchData);
   }, [context.searchData]);

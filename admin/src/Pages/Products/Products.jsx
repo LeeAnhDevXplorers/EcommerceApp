@@ -26,7 +26,7 @@ const Products = () => {
   const [pRamData, setPRamData] = useState([]);
   const [pWeigthData, setPWeigthData] = useState([]);
   const [pSizeData, setPSizeData] = useState([]);
-  const [subCatData, setsubCatData] = useState([]);
+  const [subCatData, setSubCatData] = useState([]);
   const [catData, setCatData] = useState([]);
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -122,6 +122,27 @@ const Products = () => {
       ...prev,
       [fieldName]: e.target.value,
     }));
+
+    if (fieldName === "category") {
+      fetchSubCategoriesByCategory(e.target.value);
+    }
+  };
+
+  const fetchSubCategoriesByCategory = async (categoryId) => {
+    setLoading(true);
+    try {
+      const res = await fetchDataFromApi(`/api/subCategory?categoryId=${categoryId}`);
+      if (Array.isArray(res.data)) {
+        setSubCatData(res.data);
+      } else {
+        setSubCatData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+      setSubCatData([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchProducts = async (page = 1) => {
@@ -249,8 +270,8 @@ const Products = () => {
       formData.append('name', formFields.name?.trim() || '');
       formData.append('description', formFields.description?.trim() || '');
       formData.append('brand', formFields.brand?.trim() || '');
-      formData.append('price', `${Number(updatedPrice) || 0} VND`);
-      formData.append('oldPrice', `${Number(formFields.oldPrice) || 0} VND`);
+      formData.append('price', `${Number(updatedPrice) || 0}`);
+      formData.append('oldPrice', `${Number(formFields.oldPrice) || 0}`);
       formData.append('category', formFields.category?.trim() || '');
       formData.append('subCat', formFields.subCat?.trim() || '');
       formData.append('catName', formFields.catName || '');

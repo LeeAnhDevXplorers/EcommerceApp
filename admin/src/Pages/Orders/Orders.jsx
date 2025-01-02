@@ -10,7 +10,11 @@ import Pagination from "@mui/material/Pagination";
 import { emphasize, styled } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchDataFromApi } from "../../utils/api";
+import { editData, fetchDataFromApi } from "../../utils/api";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 // Styled Component
 const StyleBreadcrumb = styled(Chip)(({ theme }) => {
@@ -36,11 +40,21 @@ const StyleBreadcrumb = styled(Chip)(({ theme }) => {
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [productOrders, setProductOrders] = useState([]);
-  const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
+  const [status, setStatus] = React.useState("");
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleChange = (event, id) => {
+    const newStatus = event.target.value;
+    editData(`/api/orders/${id}`, { status: newStatus }).then(() => {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === id ? { ...order, status: newStatus } : order
+        )
+      );
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    });
   };
 
   const handleClose = () => {
@@ -52,13 +66,6 @@ const Orders = () => {
       setOrders(res);
     });
   }, []);
-
-  const handchangePage = (value) => {
-    setPage(value);
-    fetchDataFromApi(`/api/orders?page=${value}&perPage=8`).then((res) => {
-      setOrders(res);
-    });
-  };
 
   const showProductOrder = (id) => {
     fetchDataFromApi(`/api/orders/${id}`).then((res) => {
@@ -127,13 +134,19 @@ const Orders = () => {
                   <td>{item?.email}</td>
                   <td>{item?.userId}</td>
                   <td>
-                    {item?.status === "Chờ xác nhận" ? (
-                      <span className="badge badge-danger">{item?.status}</span>
-                    ) : (
-                      <span className="badge badge-success">
-                        {item?.status}
-                      </span>
-                    )}
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                      <Select
+                        value={item?.status}
+                        onChange={(event) => handleChange(event, item?._id)}
+                        displayEmpty
+                        inputProps={{ "aria-label": "Without label" }}
+                      >
+                        <MenuItem value="Chờ xác nhận">Chờ xác nhận</MenuItem>
+                        <MenuItem value="Đã xác nhận">Đã xác nhận</MenuItem>
+                        <MenuItem value="Đang giao">Đang giao</MenuItem>
+                        <MenuItem value="Hoàn thành">Hoàn thành</MenuItem>
+                      </Select>
+                    </FormControl>
                   </td>
                   <td>{item?.date}</td>
                 </tr>
