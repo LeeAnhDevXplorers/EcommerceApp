@@ -80,7 +80,7 @@ const Home = () => {
     try {
       const response = await fetchDataFromApi(`/api/products?page=${page}`);
       if (response.success) {
-        setProductList(response.data);
+        setProductList(response);
         setTotalPages(response.totalPages);
         setCurrentPage(response.page);
       } else {

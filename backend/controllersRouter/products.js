@@ -30,16 +30,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Utility function for uploading images to Cloudinary with concurrency limit
 const uploadImages = async (images) => {
-  const limit = pLimit(2); // Set a limit for concurrent uploads
+  const limit = pLimit(2); 
   const uploadStatus = await Promise.all(
     images.map((image) =>
       limit(() =>
         cloudinary.uploader
           .upload(image.path)
           .then((result) => {
-            fs.unlinkSync(image.path); // Delete the file after uploading
+            fs.unlinkSync(image.path);
             return {
               success: true,
               url: result.url,
@@ -72,10 +71,13 @@ router.get("/", async (req, res) => {
 
     if (subName) filter.subName = subName;
     if (catName) filter.catName = catName;
-    if (subCatId) filter.subCat = subCatId; // Filter by subcategory if provided
+    if (subCatId) filter.subCat = subCatId; 
 
-    if (minPrice) filter.price = { ...filter.price, $gte: parseInt(minPrice) };
-    if (maxPrice) filter.price = { ...filter.price, $lte: parseInt(maxPrice) };
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      filter.price = {};
+      if (minPrice !== undefined) filter.price.$gte = Number(minPrice);
+      if (maxPrice !== undefined) filter.price.$lte = Number(maxPrice);
+    }
 
     if (location && location !== "All") filter.location = location;
 
@@ -88,6 +90,7 @@ router.get("/", async (req, res) => {
 
     const productList = await Products.find(filter)
       .populate("category subCat weightName ramName sizeName")
+      .sort({ price: 1 })
       .skip((page - 1) * perPage)
       .limit(perPage);
 

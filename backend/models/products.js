@@ -20,12 +20,16 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   price: {
-    type: Number, // Giá mới sẽ được tính tự động
+    type: Number,
     required: true,
+    min: 0,
+    max: 1000000 // Maximum price in USD
   },
   oldPrice: {
-    type: Number, // Giá cũ nhập từ người dùng
+    type: Number,
     required: true,
+    min: 0,
+    max: 1000000
   },
   catName: {
     type: String,
@@ -104,13 +108,12 @@ productSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
-// Đảm bảo giá trị trả về không có dấu phân cách
+// Update price formatting for USD
 productSchema.set("toJSON", {
   virtuals: true,
   transform: function (doc, ret) {
-    // Đảm bảo giá trị là số nguyên và không có dấu phân cách
-    ret.price = ret.price.toFixed(0); // Chuyển đổi thành chuỗi mà không có dấu phân cách
-    ret.oldPrice = ret.oldPrice.toFixed(0); // Chuyển đổi thành chuỗi mà không có dấu phân cách
+    ret.price = parseFloat(ret.price).toFixed(2); // Format to 2 decimal places for USD
+    ret.oldPrice = parseFloat(ret.oldPrice).toFixed(2);
     return ret;
   },
 });

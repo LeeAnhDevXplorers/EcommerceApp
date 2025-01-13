@@ -1,5 +1,4 @@
 import { Radio, RadioGroup, Rating } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React, { useContext, useEffect, useState } from 'react';
 import RangeSlider from 'react-range-slider-input';
@@ -9,7 +8,7 @@ import { MyContext } from '../../App';
 import { assets } from '../../assets/assets';
 import './SideBar.css';
 const SideBar = (props) => {
-  const [value, setValue] = useState([100, 60000]);
+  const [value, setValue] = useState([0, 1000]); // Changed to USD range
   //  const [rating, setRating] = useState(2);
   const context = useContext(MyContext);
   const [subName, setSubName] = useState('');
@@ -27,10 +26,17 @@ const SideBar = (props) => {
 
   useEffect(() => {
     props.filterByPrice(value, subName);
-  }, [value]);
+  }, [value, subName]);
 
   const filterByRating = (rating) => {
     props.filterByRating(rating, subName);
+  };
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(price);
   };
 
   return (
@@ -60,20 +66,20 @@ const SideBar = (props) => {
           </div>
         </div>
         <div className="filterBox">
-          <h6>LỌC THEO GIÁ</h6>
+          <h6>FILTER BY PRICE</h6>
           <RangeSlider
             value={value}
             onInput={setValue}
-            min={100}
-            max={60000}
-            step={5}
+            min={0}
+            max={1000}
+            step={1}
           />
           <div className="d-flex pt-2 pb-2 priceRange">
             <span>
-              Từ: <strong className="text-dark">Rs: {value[0]}</strong>
+              From: <strong className="text-dark">{formatPrice(value[0])}</strong>
             </span>
             <span className="ml-auto">
-              Đến: <strong className="text-dark">Rs: {value[1]}</strong>
+              To: <strong className="text-dark">{formatPrice(value[1])}</strong>
             </span>
           </div>
         </div>
@@ -102,49 +108,6 @@ const SideBar = (props) => {
             </ul>
           </div>
         </div>
-
-        {/* <div className="filterBox">
-          <h6>THƯƠNG HIỆU</h6>
-          <div className="scroll">
-            <ul>
-              <li>
-                <FormControlLabel
-                  className="w-100"
-                  control={<Checkbox />}
-                  label="Louis Vuitton"
-                />
-              </li>
-              <li>
-                <FormControlLabel
-                  className="w-100"
-                  control={<Checkbox />}
-                  label="Gucci"
-                />
-              </li>
-              <li>
-                <FormControlLabel
-                  className="w-100"
-                  control={<Checkbox />}
-                  label="Chanel"
-                />
-              </li>
-              <li>
-                <FormControlLabel
-                  className="w-100"
-                  control={<Checkbox />}
-                  label="Dior"
-                />
-              </li>
-              <li>
-                <FormControlLabel
-                  className="w-100"
-                  control={<Checkbox />}
-                  label="Adidas"
-                />
-              </li>
-            </ul>
-          </div>
-        </div> */}
         <Link to="#">
           <img className="w-100" src={assets.sidebar_banner} alt="" />
         </Link>

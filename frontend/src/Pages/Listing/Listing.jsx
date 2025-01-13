@@ -28,14 +28,11 @@ const Listing = (props) => {
   const { id } = useParams();
   useEffect(() => {
     const location = localStorage.getItem("location");
-
-    setTimeout(() => {
-      fetchDataFromApi(`/api/products?subName=${id}&location=${location}`).then(
+      fetchDataFromApi(`/api/products?location=${location}`).then(
         (res) => {
           setProductData(res.data);
         }
       );
-    }, 3000);
   }, [id]);
   const filterData = (subName) => {
     const location = localStorage.getItem("location");
@@ -139,7 +136,11 @@ const Listing = (props) => {
                     <ProductItem
                       key={index}
                       itemView={productView}
-                      item={{ ...item, price: `${item.price} VND`, oldPrice: `${item.oldPrice} VND` }}
+                      item={{
+                        ...item,
+                        price: `${item.price} VND`,
+                        oldPrice: `${item.oldPrice} VND`,
+                      }}
                     />
                   );
                 })}

@@ -17,10 +17,10 @@ import SignIn from './Pages/SignIn/SignIn';
 import SignUp from './Pages/SignUp/SignUp';
 import { fetchDataFromApi, postData } from './utils/api';
 import Orders from './Pages/Orders/Orders';
-import Search from './Pages/Listing/Listing';
 import MyAccount from './Pages/MyAccount/MyAccount';
 import VerifyOTP from './Pages/OTP/VerifyOTP';
 import ChangePassword from './Pages/ChangePassword/ChangePassword';
+import Search from './Pages/Search/Search';
 
 const MyContext = createContext();
 
@@ -206,6 +206,7 @@ const App = () => {
           <Route path="/checkout" exact={true} element={<Checkout />} />
           <Route path="/orders" exact={true} element={<Orders />} />
           <Route path="/search" exact={true} element={<Search />} />
+          <Route path="/shops" exact={true} element={<Listing />} />
           <Route path="/my-account" exact={true} element={<MyAccount />} />
           <Route path="/verify-otp" exact={true} element={<VerifyOTP />} />
           <Route path="/changePassword" exact={true} element={<ChangePassword />} />

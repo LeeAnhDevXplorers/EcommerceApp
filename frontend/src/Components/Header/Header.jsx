@@ -1,5 +1,4 @@
 import FactCheckIcon from '@mui/icons-material/FactCheck';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import Logout from '@mui/icons-material/Logout';
 import { Avatar, Divider, ListItemIcon, Menu, MenuItem } from '@mui/material/';
 import Button from '@mui/material/Button';

@@ -9,18 +9,18 @@ import { TbGridDots } from "react-icons/tb";
 import { TfiAngleDown, TfiLayoutGrid4Alt } from "react-icons/tfi";
 import { useParams } from "react-router-dom";
 import ProductItem from "../../Components/ProductItem/ProductItem";
-import SideBar from "../../Components/SideBar/SideBar";
 import { assets } from "../../assets/assets";
 import { fetchDataFromApi } from "../../utils/api";
-import "./Listing.css";
 import { MyContext } from "../../App";
+import SideBar from "../../Components/SideBar/SideBar";
 
-const Listing = () => {
+const Search = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [productData, setProductData] = useState([]);
   const [productView, setProductView] = useState("four");
   const context = useContext(MyContext);
   const open = Boolean(anchorEl);
+  const { searchQuery } = useParams();
 
   const handleClick = (even) => {
     setAnchorEl(even.currentTarget);
@@ -30,35 +30,46 @@ const Listing = () => {
     setAnchorEl(null);
   };
 
-  useParams();
-
   useEffect(() => {
-    // Check data from context
-    console.log(context.searchData);
-    setProductData(context.searchData);
-  }, [context.searchData]);
+    if (searchQuery) {
+      fetchDataFromApi(`/api/search?q=${searchQuery}`).then((res) => {
+        setProductData(res);
+      });
+    } else {
+      setProductData(context.searchData);
+    }
+  }, [context.searchData, searchQuery]);
 
-  const filterData = (subName) => {
-    fetchDataFromApi(`/api/products?subName=${subName}`).then((res) => {
-      setProductData(res.data);
-    });
-  };
 
-  const filterByPrice = (price, subName) => {
-    fetchDataFromApi(
-      `/api/products?minPrice=${price[0]}&maxPrice=${price[1]}&subName=${subName}`
-    ).then((res) => {
-      setProductData(res.data);
-    });
-  };
-
-  const filterByRating = (rating, subName) => {
-    fetchDataFromApi(`/api/products?rating=${rating}&subName=${subName}`).then(
-      (res) => {
+    const filterData = (subName) => {
+      const location = localStorage.getItem("location");
+  
+      setTimeout(() => {
+        fetchDataFromApi(
+          `/api/products?subName=${subName}&location=${location}`
+        ).then((res) => {
+          setProductData(res.data);
+        });
+      }, 3000);
+    };
+  
+    const filterByPrice = (price, subName) => {
+      const location = localStorage.getItem("location");
+  
+      fetchDataFromApi(
+        `/api/products?minPrice=${price[0]}&maxPrice=${price[1]}&subName=${subName}&location=${location}`
+      ).then((res) => {
         setProductData(res.data);
-      }
-    );
-  };
+      });
+    };
+  
+    const filterByRating = (rating, subName) => {
+      fetchDataFromApi(`/api/products?rating=${rating}&subName=${subName}`).then(
+        (res) => {
+          setProductData(res.data);
+        }
+      );
+    };
 
   return (
     <>
@@ -66,7 +77,7 @@ const Listing = () => {
         <div className="container">
           <div className="productListing d-flex">
             <SideBar
-              filterData={filterData}
+            filterData={filterData}
               filterByPrice={filterByPrice}
               filterByRating={filterByRating}
             />
@@ -79,7 +90,7 @@ const Listing = () => {
               />
               <div className="showBy mt-3 mb-3 d-flex align-items-center">
                 <div className="d-flex align-items-center btnWrapper">
-                   <Button
+                  <Button
                     className={productView === "one" && "atc"}
                     onClick={() => setProductView("one")}
                   >
@@ -151,4 +162,4 @@ const Listing = () => {
   );
 };
 
-export default Listing;
+export default Search;

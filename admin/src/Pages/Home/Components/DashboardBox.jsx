@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   HiDotsVertical,
   HiOutlineTrendingDown,
@@ -10,12 +10,14 @@ import {
 } from 'react-icons/hi';
 import { IoTimerOutline } from 'react-icons/io5';
 import './DashboardBox.css';
+import { fetchDataFromApi } from '../../../utils/api';
 
 const ITEM_HEIGHT = 48; // Adjust based on your menu item height
 
 const DashboardBox = ({ color, grow, icon }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [totalProducts, setTotalProducts] = useState(0);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,6 +26,12 @@ const DashboardBox = ({ color, grow, icon }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    fetchDataFromApi(`/api/products`).then((res) => {
+      setTotalProducts(res.data.length);
+    });
+  }, []);
 
   return (
     <div
@@ -37,8 +45,8 @@ const DashboardBox = ({ color, grow, icon }) => {
       </span>
       <div className="d-flex w-100">
         <div className="col1">
-          <h4 className="text-white mb-0">Total Users</h4>
-          <span className="text-white">277</span>
+          <h4 className="text-white mb-0">Total Products</h4>
+          <span className="text-white">{totalProducts}</span>
         </div>
         <div className="ml-auto">
           {icon && <span className="icon">{icon}</span>}
