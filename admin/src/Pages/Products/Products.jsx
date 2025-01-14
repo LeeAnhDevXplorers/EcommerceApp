@@ -459,7 +459,7 @@ const Products = () => {
           loading={loading}
           handleEditP={handleEditP}
           handleOpenDeleteDialog={handleOpenDeleteDialog}
-          isHomePage={true}
+          isHomePage={false}
         />
 
         <div className="d-flex tableFooter">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchDataFromApi } from "../../utils/api";
+import { editData, fetchDataFromApi } from "../../utils/api";
 import { Button, Form, Input } from "antd";
 import PropTypes from "prop-types";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -58,6 +58,10 @@ const MyAccount = (props) => {
   });
   const [preview, setPreview] = useState([]);
   const formdata = new FormData();
+  const [files, setFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [editID, setEditID] = useState(null);
 
   const changeInput = (e) => {
     setFormFields(() => ({
@@ -69,13 +73,9 @@ const MyAccount = (props) => {
     const files = e.target.files;
     if (files.length === 0) return;
 
-    // Update state to store the selected files
-    setFiles((prevFiles) => [...prevFiles, ...files]);
+    setFiles((prevFiles) => [...prevFiles, ...Array.from(files)]);
 
-    // Generate preview URLs for the selected files
     const imgArr = Array.from(files).map((file) => URL.createObjectURL(file));
-
-    // Update the previews state with the generated image URLs
     setPreviews((prevArr) => [...prevArr, ...imgArr]);
   };
 
@@ -84,10 +84,13 @@ const MyAccount = (props) => {
     const token = localStorage.getItem("token");
     if (token !== "" && token !== null && token !== undefined) {
       setIsLogin(true);
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        editusers(user._id);
+      }
     } else {
       history("/signin");
     }
-    const user = JSON.parse(localStorage.getItem("user"));
   }, []);
 
   const editusers = async (_id) => {
@@ -109,9 +112,38 @@ const MyAccount = (props) => {
     }
   };
 
-  const edituser = (e) => {
+  const edituser = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('name', formFields.name);
+    formData.append('phone', formFields.phone);
+    formData.append('email', formFields.email);
+    
+    files.forEach(file => {
+      formData.append('images', file);
+    });
+
+    try {
+      const response = await editData(`/api/users/${editID}`, formData);
+
+      if (response.ok) {
+        const result = await response.json();
+        const user = JSON.parse(localStorage.getItem("user"));
+        localStorage.setItem("user", JSON.stringify({
+          ...user,
+          name: result.name,
+          phone: result.phone
+        }));
+        alert("Profile updated successfully");
+      } else {
+        alert("Failed to update profile");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile");
+    }
   };
+
   return (
     <section className="section my-account p-10">
       <div className="container">
@@ -136,12 +168,12 @@ const MyAccount = (props) => {
                 <div className="col-md-4">
                   <div className="user-img">
                     <img
-                      src="https://laurenashpole.github.io/react-inner-image-zoom/images/unsplash-1-large.jpg"
+                      src={previews[0] || formFields.images[0] || "default-avatar-url"}
                       alt=""
                     />
                     <div className="overlay d-flex align-items-center justify-content-center">
                       <CloudUploadIcon />
-                      <input type="file" />
+                      <input type="file" onChange={onChangeFile} accept="image/*" />
                     </div>
                   </div>
                 </div>
@@ -153,15 +185,15 @@ const MyAccount = (props) => {
                           <InputLabel
                             sx={{ fontSize: "1.6rem" }}
                             shrink
-                            htmlFor="bootstrap-input"
-                            className="w-100"
+                            htmlFor="name-input"
                           >
                             Họ tên của bạn
                           </InputLabel>
                           <BootstrapInput
                             className="w-100"
-                            id="bootstrap-input"
+                            id="name-input"
                             name="name"
+                            value={formFields.name}
                             onChange={changeInput}
                           />
                         </FormControl>
@@ -173,13 +205,14 @@ const MyAccount = (props) => {
                           <InputLabel
                             sx={{ fontSize: "1.6rem" }}
                             shrink
-                            htmlFor="bootstrap-input"
+                            htmlFor="phone-input"
                           >
                             Số điện thoại
                           </InputLabel>
                           <BootstrapInput
-                            id="bootstrap-input"
+                            id="phone-input"
                             name="phone"
+                            value={formFields.phone}
                             onChange={changeInput}
                           />
                         </FormControl>
@@ -191,14 +224,15 @@ const MyAccount = (props) => {
                           <InputLabel
                             sx={{ fontSize: "1.6rem" }}
                             shrink
-                            htmlFor="bootstrap-input"
+                            htmlFor="email-input"
                           >
                             Email
                           </InputLabel>
                           <BootstrapInput
-                            id="bootstrap-input"
+                            id="email-input"
                             name="email"
-                            onChange={changeInput}
+                            value={formFields.email}
+                            disabled
                           />
                         </FormControl>
                       </div>

@@ -243,14 +243,12 @@ router.post("/signin", async (req, res) => {
 });
 router.put("/:id", upload.array("images"), async (req, res) => {
   try {
-    const { name, phone, email, password } = req.body;
+    const { name, phone } = req.body;
     const userExist = await Users.findById(req.params.id);
     if (!userExist) {
       return res.status(404).json({ message: "User not found" });
     }
-    let newPass = password
-      ? bcrypt.hashSync(password, 10)
-      : userExist.passwordHash;
+
     let imageUrls = userExist.images;
     if (req.files && req.files.length > 0) {
       const uploadResults = await uploadImages(req.files);
@@ -259,17 +257,17 @@ router.put("/:id", upload.array("images"), async (req, res) => {
       );
       imageUrls = successfulUploads.map((result) => result.url);
     }
+
     const updatedUser = await Users.findByIdAndUpdate(
       req.params.id,
       {
         name: name || userExist.name,
         phone: phone || userExist.phone,
-        email: email || userExist.email,
-        passwordHash: newPass,
         images: imageUrls,
       },
       { new: true }
     );
+
     res.status(200).json(updatedUser);
   } catch (error) {
     console.error(error);

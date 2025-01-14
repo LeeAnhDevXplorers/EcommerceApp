@@ -81,8 +81,8 @@ router.get("/", async (req, res) => {
 
     if (location && location !== "All") filter.location = location;
 
-    const totalPosts = await Products.countDocuments(filter);
-    const totalPages = Math.ceil(totalPosts / perPage);
+    const totalProducts = await Products.countDocuments(filter);
+    const totalPages = Math.ceil(totalProducts / perPage);
 
     if (page > totalPages && totalPages > 0) {
       return res.status(404).json({ message: "Không tìm thấy trang" });
@@ -98,6 +98,7 @@ router.get("/", async (req, res) => {
       data: productList,
       totalPages,
       page,
+      total: totalProducts, // Add total count to response
     });
   } catch (error) {
     console.error(error);

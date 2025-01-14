@@ -1,34 +1,33 @@
-import { Button, colors } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import InputBase from '@mui/material/InputBase';
-import InputLabel from '@mui/material/InputLabel';
-import { alpha, styled } from '@mui/material/styles';
-import process from 'process';
-import React, { useContext, useEffect, useState } from 'react';
-import { IoBagCheckOutline } from 'react-icons/io5';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { MyContext } from '../../App';
-import { fetchDataFromApi, postData } from '../../utils/api';
+import { Button, colors } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import InputBase from "@mui/material/InputBase";
+import InputLabel from "@mui/material/InputLabel";
+import { alpha, styled } from "@mui/material/styles";
+import process from "process";
+import React, { useContext, useEffect, useState } from "react";
+import { IoBagCheckOutline } from "react-icons/io5";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { MyContext } from "../../App";
+import { fetchDataFromApi, postData } from "../../utils/api";
 window.process = process;
 const Checkout = () => {
   const context = useContext(MyContext);
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState("");
   const [cartData, setCartData] = useState([]);
   const history = useNavigate();
   const [totalAmount, setTotalAmount] = useState();
   const [formFields, setFormFields] = useState({
-    fullName: '',
-    country: '',
-    conscious: '',
-    district: '',
-    specificAddress: '',
-    zipCode: '',
-    phoneNumber: '',
-    email: '',
+    fullName: "",
+    country: "",
+    conscious: "",
+    district: "",
+    specificAddress: "",
+    phoneNumber: "",
+    email: "",
   });
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
     fetchDataFromApi(`/api/cart?userId=${user?.userId}`).then((res) => {
       setCartData(res);
       setTotalAmount(
@@ -54,19 +53,18 @@ const Checkout = () => {
 
     console.log(formFields);
     if (
-      formFields.fullName === '' ||
-      formFields.country === '' ||
-      formFields.conscious === '' ||
-      formFields.district === '' ||
-      formFields.specificAddress === '' ||
-      formFields.zipCode === '' ||
-      formFields.phoneNumber === '' ||
-      formFields.email === ''
+      formFields.fullName === "" ||
+      formFields.country === "" ||
+      formFields.conscious === "" ||
+      formFields.district === "" ||
+      formFields.specificAddress === "" ||
+      formFields.phoneNumber === "" ||
+      formFields.email === ""
     ) {
       context.setAlertBox({
         open: true,
         error: true,
-        msg: 'Vui lòng nhập đầy đủ các ô  ',
+        msg: "Vui lòng nhập đầy đủ các ô  ",
       });
       return false;
     }
@@ -78,35 +76,34 @@ const Checkout = () => {
         formFields.specificAddress,
         formFields.district,
         formFields.conscious,
-        formFields.country
-      ].join(' '),
+        formFields.country,
+      ].join(" "),
 
       pincode: formFields.zipCode,
-      date: new Date().toLocaleString('en-US', {
-        month: 'short',
-        day: '2-digit',
-        year: 'numeric',
+      date: new Date().toLocaleString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
       }),
     };
 
     var options = {
-      key: 'rzp_test_lhO6WJjtmN7Evj',
-      key_secret: 'cQ1LJqRbvB92QhrWUFO4h2X7',
+      key: "rzp_test_lhO6WJjtmN7Evj",
+      key_secret: "cQ1LJqRbvB92QhrWUFO4h2X7",
       amount: parseInt(totalAmount * 100),
-      currency: 'INR',
-      order_receipt: 'order_rcptid_' + formFields.fullName,
-      name: 'E-Bharat',
-      description: 'for testing purpose',
+      currency: "INR",
+      order_receipt: "order_rcptid_" + formFields.fullName,
+      name: "E-Bharat",
+      description: "for testing purpose",
       handler: function (response) {
         // console.log(response)
         const paymentId = response.razorpay_payment_id;
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = JSON.parse(localStorage.getItem("user"));
 
         const payLoad = {
           name: addressInfo.name,
           phoneNumber: formFields.phoneNumber,
           address: addressInfo.address,
-          pincode: addressInfo.pincode,
           amount: parseInt(totalAmount * 100),
           paymentId: paymentId,
           email: user.email,
@@ -116,7 +113,7 @@ const Checkout = () => {
         console.log(payLoad);
 
         postData(`/api/orders/create`, payLoad).then((res) => {
-          history('/orders');
+          history("/orders");
         });
       },
     };
@@ -137,7 +134,7 @@ const Checkout = () => {
                     <div className="form-group">
                       <FormControl variant="standard" fullWidth>
                         <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
+                          sx={{ fontSize: "1.8rem" }}
                           shrink
                           htmlFor="bootstrap-input"
                         >
@@ -155,7 +152,7 @@ const Checkout = () => {
                     <div className="form-group">
                       <FormControl variant="standard" fullWidth>
                         <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
+                          sx={{ fontSize: "1.8rem" }}
                           shrink
                           htmlFor="bootstrap-input"
                         >
@@ -176,7 +173,7 @@ const Checkout = () => {
                     <div className="form-group">
                       <FormControl variant="standard" fullWidth>
                         <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
+                          sx={{ fontSize: "1.8rem" }}
                           shrink
                           htmlFor="bootstrap-input"
                         >
@@ -192,7 +189,7 @@ const Checkout = () => {
                     <div className="form-group">
                       <FormControl variant="standard" fullWidth>
                         <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
+                          sx={{ fontSize: "1.8rem" }}
                           shrink
                           htmlFor="bootstrap-input"
                         >
@@ -213,7 +210,7 @@ const Checkout = () => {
                     <div className="form-group">
                       <FormControl variant="standard" fullWidth>
                         <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
+                          sx={{ fontSize: "1.8rem" }}
                           shrink
                           htmlFor="bootstrap-input"
                         >
@@ -228,33 +225,12 @@ const Checkout = () => {
                     </div>
                   </div>
                 </div>
-                <h5>ZIP Code *</h5>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="form-group">
-                      <FormControl variant="standard" fullWidth>
-                        <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
-                          shrink
-                          htmlFor="bootstrap-input"
-                        >
-                          ZIP Code
-                        </InputLabel>
-                        <BootstrapInput
-                          id="bootstrap-input"
-                          name="zipCode"
-                          onChange={onChangeInput}
-                        />
-                      </FormControl>
-                    </div>
-                  </div>
-                </div>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
                       <FormControl variant="standard" fullWidth>
                         <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
+                          sx={{ fontSize: "1.8rem" }}
                           shrink
                           htmlFor="bootstrap-input"
                         >
@@ -272,7 +248,7 @@ const Checkout = () => {
                     <div className="form-group">
                       <FormControl variant="standard" fullWidth>
                         <InputLabel
-                          sx={{ fontSize: '1.8rem' }}
+                          sx={{ fontSize: "1.8rem" }}
                           shrink
                           htmlFor="bootstrap-input"
                         >
@@ -303,7 +279,7 @@ const Checkout = () => {
                         return (
                           <tr>
                             <td>
-                              {item?.productTitle?.substr(0, 20) + '...'}{' '}
+                              {item?.productTitle?.substr(0, 20) + "..."}{" "}
                               <b>x{item?.quantity}</b>
                             </td>
                             <td>{item?.price}vnđ</td>
@@ -344,43 +320,43 @@ const Checkout = () => {
 };
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  'label + &': {
+  "label + &": {
     marginTop: theme.spacing(3),
   },
-  '& .MuiInputBase-input': {
+  "& .MuiInputBase-input": {
     borderRadius: 4,
-    position: 'relative',
-    backgroundColor: '#F3F6F9',
-    border: '1px solid',
-    borderColor: '#E0E3E7',
+    position: "relative",
+    backgroundColor: "#F3F6F9",
+    border: "1px solid",
+    borderColor: "#E0E3E7",
     fontSize: 16,
-    width: '100%',
-    padding: '10px 12px',
+    width: "100%",
+    padding: "10px 12px",
     transition: theme.transitions.create([
-      'border-color',
-      'background-color',
-      'box-shadow',
+      "border-color",
+      "background-color",
+      "box-shadow",
     ]),
     // Use the system font instead of the default Roboto font.
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
+      "-apple-system",
+      "BlinkMacSystemFont",
       '"Segoe UI"',
-      'Roboto',
+      "Roboto",
       '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
+      "Arial",
+      "sans-serif",
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
+    ].join(","),
+    "&:focus": {
       boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
       borderColor: theme.palette.primary.main,
     },
-    ...theme.applyStyles('dark', {
-      backgroundColor: '#1A2027',
-      borderColor: '#2D3843',
+    ...theme.applyStyles("dark", {
+      backgroundColor: "#1A2027",
+      borderColor: "#2D3843",
     }),
   },
 }));

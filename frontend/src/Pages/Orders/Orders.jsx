@@ -67,7 +67,6 @@ const Orders = () => {
                   <th>Người nhận</th>
                   <th>Số điện thoại</th>
                   <th>Địa chỉ</th>
-                  <th>Mã code</th>
                   <th>Tổng tiền</th>
                   <th>Email</th>
                   <th>User Id</th>
@@ -88,7 +87,6 @@ const Orders = () => {
                     <td>{item?.name}</td>
                     <td>{item?.phoneNumber}</td>
                     <td>{item?.address}</td>
-                    <td>{item?.pincode}</td>
                     <td>{item?.amount}</td>
                     <td>{item?.email}</td>
                     <td>{item?.userId}</td>
@@ -103,7 +101,13 @@ const Orders = () => {
                         <span className="badge badge-success">Hoàn thành</span>
                       )}
                     </td>
-                    <td>{item?.date}</td>
+                    <td>
+                      {new Date(item?.date).toLocaleDateString("vi-VN", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })}
+                    </td>
                   </tr>
                 ))}
               </tbody>

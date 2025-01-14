@@ -10,14 +10,12 @@ import {
 } from 'react-icons/hi';
 import { IoTimerOutline } from 'react-icons/io5';
 import './DashboardBox.css';
-import { fetchDataFromApi } from '../../../utils/api';
 
 const ITEM_HEIGHT = 48; // Adjust based on your menu item height
 
-const DashboardBox = ({ color, grow, icon }) => {
+const DashboardBox = ({ color, grow, icon, title, count }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [totalProducts, setTotalProducts] = useState(0);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,12 +24,6 @@ const DashboardBox = ({ color, grow, icon }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  useEffect(() => {
-    fetchDataFromApi(`/api/products`).then((res) => {
-      setTotalProducts(res.data.length);
-    });
-  }, []);
 
   return (
     <div
@@ -45,8 +37,8 @@ const DashboardBox = ({ color, grow, icon }) => {
       </span>
       <div className="d-flex w-100">
         <div className="col1">
-          <h4 className="text-white mb-0">Total Products</h4>
-          <span className="text-white">{totalProducts}</span>
+          <h4 className="text-white mb-0">{title || 'Total Products'}</h4>
+          <span className="text-white">{count || 0}</span>
         </div>
         <div className="ml-auto">
           {icon && <span className="icon">{icon}</span>}
@@ -64,7 +56,7 @@ const DashboardBox = ({ color, grow, icon }) => {
           onClick={handleClick}
         >
           <HiDotsVertical />
-        </Button>
+        </Button> 
         <Menu
           id="long-menu"
           MenuListProps={{
@@ -108,6 +100,8 @@ DashboardBox.propTypes = {
   color: PropTypes.arrayOf(PropTypes.string),
   grow: PropTypes.bool,
   icon: PropTypes.node,
+  title: PropTypes.string,
+  count: PropTypes.number,
 };
 
 export default DashboardBox;
