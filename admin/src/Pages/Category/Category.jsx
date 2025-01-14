@@ -1,27 +1,27 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import HomeIcon from '@mui/icons-material/Home';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import HomeIcon from "@mui/icons-material/Home";
 import {
   Backdrop,
   Breadcrumbs,
   Button,
   Chip,
   CircularProgress,
-} from '@mui/material';
-import { emphasize, styled } from '@mui/material/styles';
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { MyContext } from '../../App';
-import { bgColor } from '../../assets/assets';
-import { deleteData, editData, fetchDataFromApi } from '../../utils/api';
-import './Category.css';
-import CategoryPagination from './Components/CategoryPagination/CategoryPagination';
-import CategoryTable from './Components/CategoryTable/CategoryTable';
-import DeleteDialog from './Components/DeleteDialog/DeleteDialog';
-import EditCategoryDialog from './Components/EditCategoryDialog/EditCategoryDialog';
+} from "@mui/material";
+import { emphasize, styled } from "@mui/material/styles";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { MyContext } from "../../App";
+import { bgColor } from "../../assets/assets";
+import { deleteData, editData, fetchDataFromApi } from "../../utils/api";
+import "./Category.css";
+import CategoryPagination from "./Components/CategoryPagination/CategoryPagination";
+import CategoryTable from "./Components/CategoryTable/CategoryTable";
+import DeleteDialog from "./Components/DeleteDialog/DeleteDialog";
+import EditCategoryDialog from "./Components/EditCategoryDialog/EditCategoryDialog";
 
 const StyleBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
-    theme.palette.mode === 'light'
+    theme.palette.mode === "light"
       ? theme.palette.grey[100]
       : theme.palette.grey[800];
   return {
@@ -29,10 +29,10 @@ const StyleBreadcrumb = styled(Chip)(({ theme }) => {
     height: theme.spacing(3),
     color: theme.palette.text.primary,
     fontWeight: theme.typography.fontWeightRegular,
-    '&:hover, &:focus': {
+    "&:hover, &:focus": {
       backgroundColor: emphasize(backgroundColor, 0.06),
     },
-    '&:active': {
+    "&:active": {
       boxShadow: theme.shadows[1],
       backgroundColor: emphasize(backgroundColor, 0.12),
     },
@@ -43,10 +43,10 @@ const Category = () => {
   const context = useContext(MyContext);
   const [loading, setLoading] = useState(false);
   const [formFields, setFormFields] = useState({
-    name: '',
+    name: "",
     subCat: "",
     images: [],
-    color: '',
+    color: "",
   });
   const [open, setOpen] = useState(false);
   const [catData, setCatData] = useState([]);
@@ -57,20 +57,20 @@ const Category = () => {
   const [previews, setPreviews] = useState([]);
 
   const fetchCategories = async (page = 1) => {
-    setLoading(true); 
+    setLoading(true);
     try {
       const response = await fetchDataFromApi(`/api/category?page=${page}`);
-      setCatData(response); 
+      setCatData(response);
     } catch (error) {
-      console.error('Không thể lấy danh sách danh mục:', error);
+      console.error("Không thể lấy danh sách danh mục:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     context.setProgress(30);
-    fetchCategories(context.setProgress(100)); 
+    fetchCategories(context.setProgress(100));
   }, []);
 
   const editCat = async (_id) => {
@@ -84,11 +84,10 @@ const Category = () => {
           subCat: res.subCat,
           color: res.color,
         });
-       
+
         setPreviews(res.images || []);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -99,8 +98,8 @@ const Category = () => {
   };
 
   const handleClose = () => {
-    setOpen(false); 
-    setFormFields({ name: '', subCat: "", images: '', color: '' }); // Đặt lại các trường trong form
+    setOpen(false);
+    setFormFields({ name: "", subCat: "", images: "", color: "" }); // Đặt lại các trường trong form
   };
 
   const editCategoryFun = async (event) => {
@@ -109,19 +108,18 @@ const Category = () => {
 
     try {
       const formData = new FormData();
-      formData.append('name', formFields.name);
-      formData.append('subCat', formFields.subCat);
-      formData.append('color', formFields.color);
+      formData.append("name", formFields.name);
+      formData.append("subCat", formFields.subCat);
+      formData.append("color", formFields.color);
 
-     
       previews.forEach((preview, index) => {
-        if (typeof preview === 'string' && preview.startsWith('http')) {
-          formData.append('existingImages', preview);
+        if (typeof preview === "string" && preview.startsWith("http")) {
+          formData.append("existingImages", preview);
         }
       });
 
       files.forEach((file) => {
-        formData.append('images', file);
+        formData.append("images", file);
       });
 
       await editData(`/api/category/${editID}`, formData);
@@ -133,14 +131,14 @@ const Category = () => {
 
       context.setAlertBox({
         error: false,
-        msg: 'Sửa thành công',
+        msg: "Sửa thành công",
         open: true,
       });
     } catch (error) {
-      console.error('Không thể chỉnh sửa danh mục:', error);
+      console.error("Không thể chỉnh sửa danh mục:", error);
       context.setAlertBox({
         error: true,
-        msg: 'Lỗi xảy ra khi chỉnh sửa danh mục',
+        msg: "Lỗi xảy ra khi chỉnh sửa danh mục",
         open: true,
       });
     } finally {
@@ -151,17 +149,17 @@ const Category = () => {
   const changeInput = (e) => {
     setFormFields((prevFields) => ({
       ...prevFields,
-      [e.target.name]: e.target.value, 
+      [e.target.name]: e.target.value,
     }));
   };
 
   const handleOpenDeleteDialog = (_id) => {
-    setDeleteID(_id); 
-    setOpenDeleteDialog(true); 
+    setDeleteID(_id);
+    setOpenDeleteDialog(true);
   };
 
   const handleCloseDeleteDialog = () => {
-    setOpenDeleteDialog(false); 
+    setOpenDeleteDialog(false);
     setDeleteID(null);
   };
 
@@ -169,13 +167,13 @@ const Category = () => {
     context.setProgress(30);
 
     try {
-      await deleteData(`/api/category/${deleteID}`); 
+      await deleteData(`/api/category/${deleteID}`);
       context.setProgress(70);
-      await fetchCategories(); 
+      await fetchCategories();
       context.setProgress(100);
       handleCloseDeleteDialog();
     } catch (error) {
-      context.setProgress(0); 
+      context.setProgress(0);
     }
   };
 
@@ -183,10 +181,10 @@ const Category = () => {
     context.setProgress(30);
 
     try {
-      await fetchCategories(value); 
+      await fetchCategories(value);
     } catch (error) {
     } finally {
-      context.setProgress(100); 
+      context.setProgress(100);
     }
   };
 
@@ -197,9 +195,8 @@ const Category = () => {
       const newPreviews = filesArray.map((file) => URL.createObjectURL(file));
       setPreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
     }
-    
   };
- 
+
   const removeFile = (index) => {
     setPreviews((prevPreviews) => {
       const newPreviews = [...prevPreviews];
@@ -214,13 +211,11 @@ const Category = () => {
     });
   };
   console.log(catData);
-  
 
   return (
     <>
       <div className="right-content w-100">
         <div className="card shadow border-0 p-3 mt-4 w-100">
-          {/* Header */}
           <div className="MuiBox-root css-99a237 d-flex">
             <h6 className="MuiTypography-root MuiTypography-h6 css-66yapz-MuiTypography-root">
               Danh sách danh mục
@@ -241,14 +236,13 @@ const Category = () => {
                 deleteIcon={<ExpandMoreIcon />}
               />
               <Button className="btn-blue btn-lg">
-                <Link style={{ color: '#fff' }} to={'/category/categoryadd'}>
+                <Link style={{ color: "#fff" }} to={"/category/categoryadd"}>
                   Thêm Danh Mục
                 </Link>
               </Button>
             </Breadcrumbs>
           </div>
 
-          {/* Table */}
           <div className="table-responsive w-100 mt-5">
             <CategoryTable
               isShowTable={true}
@@ -274,8 +268,6 @@ const Category = () => {
           onDelete={handleDeleteConfirm}
         />
 
-        {/* Edit Category Dialog */}
-
         <EditCategoryDialog
           open={open}
           formFields={formFields}
@@ -291,13 +283,11 @@ const Category = () => {
           isShowEdit={true}
         />
 
-        {/* Backdrop for loading */}
         <Backdrop
           sx={{
-            color: '#fff',
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            // zIndex: (theme) => theme.zIndex.drawer + 1,
-            transition: 'opacity 0.3s ease-in-out',
+            color: "#fff",
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            transition: "opacity 0.3s ease-in-out",
             zIndex: 9999,
           }}
           open={loading}
@@ -310,4 +300,3 @@ const Category = () => {
 };
 
 export default Category;
-

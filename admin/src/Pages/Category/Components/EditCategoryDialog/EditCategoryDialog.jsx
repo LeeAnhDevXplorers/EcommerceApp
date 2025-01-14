@@ -45,7 +45,6 @@ const EditCategoryDialog = ({
         <Dialog
           fullScreen
           open={open}
-          // maxWidth="sm"
           sx={{ width: '1000px' }}
           TransitionComponent={Transition}
         >

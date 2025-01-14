@@ -1,8 +1,8 @@
 // CategoryTable.js
-import { Button } from '@mui/material';
-import React from 'react';
-import { FaPencilAlt } from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
+import { Button } from "@mui/material";
+import React from "react";
+import { FaPencilAlt } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const CategoryTable = ({
   catData,
@@ -34,23 +34,23 @@ const CategoryTable = ({
                       <div
                         className="imgWrapper"
                         style={{
-                          display: 'flex',
-                          gap: '4px',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: '50px',
-                          height: '50px',
+                          display: "flex",
+                          gap: "4px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: "50px",
+                          height: "50px",
                         }}
                       >
                         <div
                           className="img"
                           style={{
-                            display: 'flex',
-                            gap: '4px',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '50px',
-                            height: '50px',
+                            display: "flex",
+                            gap: "4px",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "50px",
+                            height: "50px",
                           }}
                         >
                           {item.images && item.images.length > 0 ? (
@@ -58,9 +58,9 @@ const CategoryTable = ({
                               <img
                                 key={idx}
                                 src={image}
-                                alt={item.name + ' image ' + idx}
+                                alt={item.name + " image " + idx}
                                 className="w-100"
-                                style={{ marginBottom: '5px' }}
+                                style={{ marginBottom: "5px" }}
                               />
                             ))
                           ) : (
@@ -71,13 +71,13 @@ const CategoryTable = ({
                     </div>
                   </td>
                   <td>{item.name}</td>
-                  <td style={{ textAlign: 'center' }}>
+                  <td style={{ textAlign: "center" }}>
                     <div
                       className="text-center"
                       style={{
                         backgroundColor: item.color,
-                        height: '50px',
-                        lineHeight: '50px',
+                        height: "50px",
+                        lineHeight: "50px",
                       }}
                     >
                       {item.color}
@@ -85,6 +85,13 @@ const CategoryTable = ({
                   </td>
                   <td>
                     <div className="actions d-flex align-items-center">
+                      <Button
+                        className="success"
+                        color="success"
+                        onClick={() => editCat(item._id)}
+                      >
+                        <FaPencilAlt />
+                      </Button>
                       <Button
                         className="success"
                         color="success"
